@@ -2,7 +2,7 @@
 // Designer Portfolio - JavaScript
 // ===================================
 
-document.addEventListener('DOMContentLoaded', () => {
+window.initApp = function () {
     initScrollAnimations();
     initMobileMenu();
     initSmoothScroll();
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLightbox();
     initHeroWorksGrid();
     initPortfolioPagination();
-});
+};
 
 // ===================================
 // Hero Works Grid - Random Images
