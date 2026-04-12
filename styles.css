@@ -693,66 +693,6 @@ button {
 /* ===================================
    About Section
    =================================== */
-.about {
-    padding: var(--spacing-4xl) 0;
-    background-color: var(--bg-alt);
-}
-
-.about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-4xl);
-    align-items: center;
-}
-
-.about-img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-}
-
-.about-bio {
-    font-size: var(--font-size-lg);
-    color: var(--text-light);
-    margin-bottom: var(--spacing-lg);
-    line-height: 1.8;
-}
-
-.expertise {
-    margin-top: var(--spacing-2xl);
-}
-
-.expertise h3 {
-    font-size: var(--font-size-xl);
-    font-weight: 600;
-    color: var(--text-main);
-    margin-bottom: var(--spacing-md);
-}
-
-.expertise-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-sm);
-}
-
-.expertise-list li {
-    font-size: var(--font-size-base);
-    color: var(--text-light);
-    padding-left: var(--spacing-lg);
-    position: relative;
-}
-
-.expertise-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    background-color: var(--accent);
-    border-radius: 50%;
-}
 
 /* ===================================
    Contact Section
@@ -1396,15 +1336,6 @@ button {
     .portfolio-item.large,
     .portfolio-item.wide {
         grid-column: span 1;
-    }
-
-    .about-content {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-2xl);
-    }
-
-    .expertise-list {
-        grid-template-columns: 1fr;
     }
 
     .pricing-grid {
