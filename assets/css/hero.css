@@ -1,0 +1,518 @@
+/* ===================================
+   hero.css
+   Sadece sections/hero.html için
+   =================================== */
+
+/* -------- Section -------- */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: var(--header-height);
+    background-color: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+/* -------- Arka plan: ince şerit grid -------- */
+.hero-bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(4, 30, 67, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(4, 30, 67, 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* -------- Arka plan: sağ üst ışık halkası -------- */
+.hero-bg-glow {
+    position: absolute;
+    top: -200px;
+    right: -150px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(240, 197, 113, 0.12) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* -------- Parallax desen (mevcut SVG pattern korunuyor) -------- */
+.hero-pattern {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 0;
+    transition: transform 0.1s ease-out;
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23041e43' stroke-width='1'%3E%3Cpath d='M30 20 L50 10 L70 20 L70 45 L50 55 L30 45 Z'/%3E%3Cpath d='M30 20 L30 45 L50 55 L50 30 L30 20'/%3E%3Cpath d='M50 30 L70 20 L70 45 L50 55'/%3E%3Cpath d='M50 10 L50 30'/%3E%3Crect x='80' y='15' width='25' height='25' rx='2'/%3E%3Cline x1='80' y1='27.5' x2='105' y2='27.5'/%3E%3Cline x1='92.5' y1='15' x2='92.5' y2='40'/%3E%3Cpath d='M20 70 L35 85 L25 95 L10 80 Z'/%3E%3Ccircle cx='20' cy='70' r='3'/%3E%3Ccircle cx='35' cy='85' r='3'/%3E%3Cpath d='M55 70 Q75 60 95 80' stroke-width='1.5'/%3E%3Ccircle cx='55' cy='70' r='3'/%3E%3Ccircle cx='95' cy='80' r='3'/%3E%3Cline x1='55' y1='70' x2='75' y2='60' stroke-dasharray='3,3'/%3E%3Ccircle cx='75' cy='60' r='2'/%3E%3Cpath d='M100 100 L110 80 L120 100 Z'/%3E%3Ccircle cx='15' cy='110' r='8'/%3E%3Cpath d='M60 100 L60 115 M52.5 107.5 L67.5 107.5'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px 120px;
+}
+
+/* -------- İçerik grid -------- */
+.hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4xl);
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    padding-top: var(--spacing-2xl);
+    padding-bottom: var(--spacing-2xl);
+}
+
+/* -------- Sol: Metin -------- */
+.hero-text {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Üst badge / pill */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--navy-blue-light);
+    background: rgba(13, 58, 120, 0.07);
+    border: 1px solid rgba(13, 58, 120, 0.15);
+    padding: 6px 14px;
+    border-radius: 50px;
+    margin-bottom: var(--spacing-lg);
+    width: fit-content;
+    animation: heroFadeUp 0.6s ease both;
+    animation-delay: 0.1s;
+}
+
+.hero-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--accent-gold);
+    animation: heroPulse 2s ease infinite;
+    flex-shrink: 0;
+}
+
+@keyframes heroPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.75); }
+}
+
+/* Ana başlık */
+.hero-title {
+    font-size: var(--font-size-6xl);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    color: var(--navy-blue);
+    margin-bottom: var(--spacing-lg);
+    animation: heroFadeUp 0.6s ease both;
+    animation-delay: 0.2s;
+}
+
+.hero-title-accent {
+    color: var(--accent-gold);
+    position: relative;
+    display: inline-block;
+}
+
+/* Altın çizgi altında başlık */
+.hero-title-accent::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-gold), rgba(240, 197, 113, 0.2));
+    border-radius: 2px;
+}
+
+/* Altyazı */
+.hero-subtitle {
+    font-size: var(--font-size-base);
+    color: var(--gray);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-xl);
+    max-width: 420px;
+    animation: heroFadeUp 0.6s ease both;
+    animation-delay: 0.3s;
+}
+
+.hero-subtitle strong {
+    color: var(--navy-blue);
+    font-weight: 600;
+}
+
+/* -------- Özellik kartları -------- */
+.hero-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: var(--spacing-xl);
+    animation: heroFadeUp 0.6s ease both;
+    animation-delay: 0.4s;
+}
+
+.hero-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--off-white);
+    border: 1px solid rgba(4, 30, 67, 0.08);
+    transition: all var(--transition-base);
+}
+
+.hero-feature-item:hover {
+    background: var(--white);
+    border-color: rgba(4, 30, 67, 0.16);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(4, 30, 67, 0.08);
+}
+
+.hero-feature-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy-blue);
+    border-radius: 9px;
+    color: var(--accent-gold);
+}
+
+.hero-feature-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.hero-feature-text h4 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--navy-blue);
+    margin-bottom: 2px;
+    line-height: 1.3;
+}
+
+.hero-feature-text p {
+    font-size: 0.72rem;
+    color: var(--gray);
+    line-height: 1.4;
+}
+
+/* -------- CTA Butonları -------- */
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+    animation: heroFadeUp 0.6s ease both;
+    animation-delay: 0.5s;
+}
+
+.btn-hero-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy-blue);
+    color: var(--white);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 14px 26px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all var(--transition-base);
+    box-shadow: 0 4px 20px rgba(4, 30, 67, 0.25);
+}
+
+.btn-hero-primary svg {
+    width: 16px;
+    height: 16px;
+    transition: transform var(--transition-base);
+}
+
+.btn-hero-primary:hover {
+    background: var(--navy-blue-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(4, 30, 67, 0.32);
+}
+
+.btn-hero-primary:hover svg {
+    transform: translateX(4px);
+}
+
+.btn-hero-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(37, 211, 102, 0.08);
+    color: #16a34a;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 14px 22px;
+    border-radius: 50px;
+    border: 1px solid rgba(37, 211, 102, 0.3);
+    text-decoration: none;
+    transition: all var(--transition-base);
+}
+
+.btn-hero-secondary svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.btn-hero-secondary:hover {
+    background: rgba(37, 211, 102, 0.15);
+    border-color: rgba(37, 211, 102, 0.5);
+    transform: translateY(-2px);
+}
+
+/* -------- İstatistikler -------- */
+.hero-stats {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid rgba(4, 30, 67, 0.08);
+    animation: heroFadeUp 0.6s ease both;
+    animation-delay: 0.6s;
+}
+
+.hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.hero-stat-num {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy-blue);
+    line-height: 1;
+}
+
+.hero-stat-plus {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+}
+
+.hero-stat-label {
+    font-size: 0.7rem;
+    color: var(--gray);
+    letter-spacing: 0.3px;
+}
+
+.hero-stat-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(4, 30, 67, 0.1);
+}
+
+/* -------- Sağ: Görsel çerçeve -------- */
+.hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: heroFadeUp 0.7s ease both;
+    animation-delay: 0.3s;
+}
+
+.hero-visual-frame {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+}
+
+/* Floating etiketler */
+.hero-float-badge {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 50px;
+    z-index: 10;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(4, 30, 67, 0.15);
+}
+
+.hero-float-badge--tl {
+    top: -14px;
+    left: -14px;
+    background: var(--navy-blue);
+    color: var(--accent-gold);
+    border: 1px solid rgba(240, 197, 113, 0.2);
+    animation: heroFloat 3s ease-in-out infinite;
+}
+
+.hero-float-badge--br {
+    bottom: -14px;
+    right: -14px;
+    background: var(--white);
+    color: var(--navy-blue);
+    border: 1px solid rgba(4, 30, 67, 0.1);
+    animation: heroFloat 3s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+@keyframes heroFloat {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-6px); }
+}
+
+/* Works ızgara */
+.hero-works-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 118px);
+    gap: 6px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(4, 30, 67, 0.18);
+}
+
+.hero-works-grid .grid-img-wrapper {
+    overflow: hidden;
+    background-color: var(--bg-alt);
+}
+
+.hero-works-grid .grid-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.hero-works-grid .grid-img-wrapper:hover img {
+    transform: scale(1.1);
+}
+
+/* -------- Fade-up animasyonu -------- */
+@keyframes heroFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================
+   Hero — Responsive
+   =================================== */
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: var(--font-size-5xl);
+    }
+
+    .hero-works-grid {
+        grid-template-rows: repeat(4, 100px);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-2xl);
+        text-align: center;
+    }
+
+    .hero-badge {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-title {
+        font-size: var(--font-size-4xl);
+        letter-spacing: -0.5px;
+    }
+
+    .hero-subtitle {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-features {
+        grid-template-columns: 1fr 1fr;
+        text-align: left;
+    }
+
+    .hero-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .hero-stats {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        order: -1;
+    }
+
+    .hero-visual-frame {
+        max-width: 420px;
+    }
+
+    .hero-works-grid {
+        grid-template-rows: repeat(4, 90px);
+    }
+
+    .hero-float-badge--tl {
+        top: -10px;
+        left: -6px;
+    }
+
+    .hero-float-badge--br {
+        bottom: -10px;
+        right: -6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .hero-features {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        justify-content: center;
+    }
+
+    .hero-works-grid {
+        grid-template-rows: repeat(4, 76px);
+    }
+
+    .hero-float-badge {
+        font-size: 0.65rem;
+        padding: 6px 10px;
+    }
+}

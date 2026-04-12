@@ -1,0 +1,197 @@
+/* ===================================
+   portfolio.css
+   sections/portfolio.html tarafından
+   kullanılan tüm stiller
+   =================================== */
+
+/* -------- Section wrapper -------- */
+.work {
+    padding: var(--spacing-4xl) 0;
+    background-color: var(--bg-body);
+}
+
+/* -------- Grid -------- */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+    overflow: hidden;
+}
+
+.portfolio-item {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: var(--bg-alt);
+    height: 250px;
+}
+
+.portfolio-item.large {
+    grid-column: span 2;
+    grid-row: span 2;
+    height: 516px;
+}
+
+.portfolio-item.tall {
+    grid-row: span 2;
+    height: 516px;
+}
+
+.portfolio-item.wide {
+    grid-column: span 2;
+    height: 250px;
+}
+
+/* -------- Görsel -------- */
+.portfolio-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.portfolio-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-base);
+}
+
+.portfolio-item:hover .portfolio-image img {
+    transform: scale(1.05);
+}
+
+/* -------- Overlay -------- */
+.portfolio-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--spacing-xl);
+    background: linear-gradient(to top, rgba(4, 30, 67, 0.9), transparent);
+    color: var(--white);
+    transform: translateY(100%);
+    transition: transform var(--transition-base);
+}
+
+.portfolio-item:hover .portfolio-overlay {
+    transform: translateY(0);
+}
+
+.portfolio-overlay h3 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+}
+
+.portfolio-overlay p {
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+    color: var(--auxiliary-blue);
+}
+
+/* -------- Auto-slide progress bar -------- */
+.portfolio-progress {
+    width: 100%;
+    height: 3px;
+    background: rgba(4, 30, 67, 0.08);
+    border-radius: 3px;
+    margin-top: var(--spacing-xl);
+    overflow: hidden;
+}
+
+.portfolio-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--navy-blue-light), var(--accent-gold));
+    border-radius: 3px;
+    /* transition süresi JS tarafından dinamik olarak atanır */
+}
+
+/* -------- Sayfalama kontrolleri -------- */
+.portfolio-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+}
+
+.portfolio-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--text-main);
+    background: var(--white);
+    border: 2px solid var(--border-color);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-family: var(--font-family);
+}
+
+.portfolio-nav-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.portfolio-nav-btn:hover:not(:disabled) {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.portfolio-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.portfolio-page-info {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-light);
+    min-width: 52px;
+    text-align: center;
+}
+
+/* ===================================
+   Responsive
+   =================================== */
+@media (max-width: 1024px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .portfolio-item.large {
+        grid-column: span 2;
+        grid-row: span 1;
+        height: 250px;
+    }
+
+    .portfolio-item.tall {
+        grid-row: span 1;
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-item,
+    .portfolio-item.large,
+    .portfolio-item.tall,
+    .portfolio-item.wide {
+        grid-column: span 1;
+        grid-row: span 1;
+        height: 220px;
+    }
+}

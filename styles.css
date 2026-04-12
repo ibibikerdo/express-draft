@@ -167,244 +167,281 @@ button {
 }
 
 /* ===================================
-   Header
+   Header  (eski .header bloğunu SİLİP
+   bunla değiştirin)
    =================================== */
+
 .header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: var(--header-height);
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    /* 80px */
+    background-color: var(--navy-blue);
+    /* koyu lacivert — footer ile aynı */
+    border-bottom: 1px solid rgba(152, 181, 217, 0.15);
     z-index: 1000;
-    border-bottom: 1px solid var(--border-color);
+    transition: box-shadow var(--transition-base);
 }
 
+/* scroll sonrası hafif gölge — JS ile ekleniyor */
+.header.scrolled {
+    box-shadow: 0 2px 24px rgba(2, 15, 35, 0.45);
+}
+
+/* -------- İçerik satırı -------- */
 .header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 100%;
+    gap: var(--spacing-lg);
 }
 
+/* -------- Logo -------- */
 .logo {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    flex-shrink: 0;
 }
 
 .logo-img {
-    height: 65px;
+    height: 52px;
     width: auto;
 }
 
+/* Logo metni varsa (img yoksa fallback) */
 .logo-text {
-    font-size: var(--font-size-xl);
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--text-main);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+}
+
+/* -------- Nav -------- */
+.nav {
+    display: flex;
+    align-items: center;
 }
 
 .nav-list {
     display: flex;
-    gap: var(--spacing-2xl);
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
 }
 
+/* Nav linkleri */
 .nav-link {
-    font-size: var(--font-size-sm);
+    font-size: 0.75rem;
     font-weight: 500;
-    color: var(--text);
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: rgba(152, 181, 217, 0.75);
+    /* footer link rengiyle aynı */
     position: relative;
+    padding-bottom: 3px;
+    transition: color var(--transition-base);
 }
 
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -2px;
     left: 0;
     width: 0;
-    height: 2px;
-    background-color: var(--accent);
+    height: 1.5px;
+    background-color: var(--accent-gold);
     transition: width var(--transition-base);
 }
 
 .nav-link:hover {
-    color: var(--primary);
+    color: var(--white);
 }
 
 .nav-link:hover::after {
     width: 100%;
 }
 
-/* Mobile Menu Button */
+/* Aktif sayfa linki */
+.nav-link.active {
+    color: var(--accent-gold);
+}
+
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Nav'ı nav'dan ayıran ince çizgi */
+.nav-separator {
+    width: 1px;
+    height: 18px;
+    background: rgba(152, 181, 217, 0.2);
+    margin: 0 0.25rem;
+    list-style: none;
+}
+
+/* -------- Header CTA (WhatsApp pill) -------- */
+.header-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    color: var(--accent-gold);
+    background: rgba(240, 197, 113, 0.08);
+    border: 1px solid rgba(240, 197, 113, 0.25);
+    padding: 7px 16px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all var(--transition-base);
+    white-space: nowrap;
+}
+
+.header-cta svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+}
+
+.header-cta:hover {
+    background: rgba(240, 197, 113, 0.16);
+    border-color: rgba(240, 197, 113, 0.5);
+    transform: translateY(-1px);
+}
+
+/* -------- Hamburger butonu (mobil) -------- */
 .mobile-menu-btn {
     display: none;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
     padding: var(--spacing-sm);
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .mobile-menu-btn span {
     display: block;
-    width: 24px;
-    height: 2px;
-    background-color: var(--text-main);
+    width: 22px;
+    height: 1.5px;
+    background-color: var(--auxiliary-blue);
+    border-radius: 2px;
     transition: all var(--transition-base);
 }
 
-/* ===================================
-   Hero Section
-   =================================== */
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding-top: var(--header-height);
-    background: linear-gradient(135deg, var(--white) 0%, var(--bg-alt) 100%);
-    position: relative;
-    overflow: hidden;
+/* Hamburger → X animasyonu */
+.mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(4.5px, 4.5px);
 }
 
-/* Hero Background Pattern */
-.hero-pattern {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    opacity: 0.15;
-    pointer-events: none;
-    z-index: 0;
-    transition: transform 0.1s ease-out;
-    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23041e43' stroke-width='1'%3E%3C!-- 3D Cube --%3E%3Cpath d='M30 20 L50 10 L70 20 L70 45 L50 55 L30 45 Z'/%3E%3Cpath d='M30 20 L30 45 L50 55 L50 30 L30 20'/%3E%3Cpath d='M50 30 L70 20 L70 45 L50 55'/%3E%3Cpath d='M50 10 L50 30'/%3E%3C!-- Design Grid --%3E%3Crect x='80' y='15' width='25' height='25' rx='2'/%3E%3Cline x1='80' y1='27.5' x2='105' y2='27.5'/%3E%3Cline x1='92.5' y1='15' x2='92.5' y2='40'/%3E%3C!-- Pen Tool --%3E%3Cpath d='M20 70 L35 85 L25 95 L10 80 Z'/%3E%3Ccircle cx='20' cy='70' r='3'/%3E%3Ccircle cx='35' cy='85' r='3'/%3E%3C!-- Bezier Curve --%3E%3Cpath d='M55 70 Q75 60 95 80' stroke-width='1.5'/%3E%3Ccircle cx='55' cy='70' r='3'/%3E%3Ccircle cx='95' cy='80' r='3'/%3E%3Cline x1='55' y1='70' x2='75' y2='60' stroke-dasharray='3,3'/%3E%3Ccircle cx='75' cy='60' r='2'/%3E%3C!-- Triangle --%3E%3Cpath d='M100 100 L110 80 L120 100 Z'/%3E%3C!-- Circle --%3E%3Ccircle cx='15' cy='110' r='8'/%3E%3C!-- Cross/Plus --%3E%3Cpath d='M60 100 L60 115 M52.5 107.5 L67.5 107.5'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 120px 120px;
+.mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
 }
 
-.hero-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-4xl);
-    align-items: center;
-}
-
-.hero-greeting {
-    font-size: var(--font-size-lg);
-    color: var(--accent);
-    font-weight: 500;
-    margin-bottom: var(--spacing-sm);
-}
-
-.hero-title {
-    font-size: var(--font-size-6xl);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: var(--spacing-lg);
-    color: var(--text-main);
-}
-
-.hero-subtitle {
-    font-size: var(--font-size-lg);
-    color: var(--text-light);
-    margin-bottom: var(--spacing-2xl);
-    max-width: 400px;
-}
-
-.hero-visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(4.5px, -4.5px);
 }
 
 /* ===================================
-   Hero Features (Icon Items)
+   Header — Responsive
    =================================== */
-.hero-features {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-2xl);
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .nav-list {
+        gap: 1.5rem;
+    }
 }
 
-.hero-feature-item {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
-    border-radius: 12px;
-    background: rgba(4, 30, 67, 0.04);
-    border: 1px solid rgba(4, 30, 67, 0.1);
-    transition: all var(--transition-base);
+/* Mobil */
+@media (max-width: 768px) {
+
+    .mobile-menu-btn {
+        display: flex;
+        order: 2;
+    }
+
+    /* Mobil nav açılır panel */
+    .nav-list {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        background-color: var(--navy-blue-dark);
+        border-bottom: 1px solid rgba(152, 181, 217, 0.15);
+        padding: var(--spacing-xl) 0;
+
+        /* Gizli durum */
+        transform: translateY(-10px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity var(--transition-base),
+            transform var(--transition-base),
+            visibility var(--transition-base);
+    }
+
+    .nav-list.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .nav-list li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-link {
+        display: block;
+        padding: var(--spacing-md) var(--spacing-2xl);
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        color: rgba(152, 181, 217, 0.75);
+    }
+
+    .nav-link:hover {
+        color: var(--white);
+        background: rgba(152, 181, 217, 0.06);
+    }
+
+    /* Mobilde separator gizle */
+    .nav-separator {
+        display: none;
+    }
+
+    /* Mobilde CTA ayrı satır */
+    .nav-list li:last-child {
+        padding-top: var(--spacing-md);
+        border-top: 1px solid rgba(152, 181, 217, 0.1);
+        margin-top: var(--spacing-sm);
+    }
+
+    .header-cta {
+        font-size: 0.78rem;
+        padding: 9px 20px;
+    }
 }
 
-.hero-feature-item:hover {
-    background: rgba(4, 30, 67, 0.08);
-    border-color: rgba(4, 30, 67, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(4, 30, 67, 0.1);
+@media (max-width: 480px) {
+    .logo-img {
+        height: 42px;
+    }
 }
 
-.hero-feature-icon {
-    flex-shrink: 0;
-    width: 42px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    border-radius: 10px;
-    color: var(--white);
-}
 
-.hero-feature-icon svg {
-    width: 20px;
-    height: 20px;
-}
 
-.hero-feature-text h4 {
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    color: var(--text-main);
-    margin-bottom: 2px;
-}
-
-.hero-feature-text p {
-    font-size: 0.8rem;
-    color: var(--text-light);
-    line-height: 1.4;
-}
-
-/* ===================================
-   Hero Works Grid
-   =================================== */
-.hero-works-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 120px);
-    gap: 8px;
-    width: 100%;
-    max-width: 550px;
-}
-
-.hero-works-grid .grid-img-wrapper {
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-    background-color: var(--bg-alt);
-}
-
-.hero-works-grid .grid-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform var(--transition-base);
-}
-
-.hero-works-grid .grid-img-wrapper:hover img {
-    transform: scale(1.08);
-}
 
 /* ===================================
    Pricing Section
@@ -805,18 +842,194 @@ button {
 }
 
 /* ===================================
-   Footer
+   Footer (Yeni Tasarım)
+   styles.css'inizin en altına ekleyin,
+   eski .footer bloğunu SİLİP bunla değiştirin
    =================================== */
+
 .footer {
-    padding: var(--spacing-xl) 0;
-    background-color: var(--text-main);
-    color: var(--white);
-    text-align: center;
+    background-color: var(--navy-blue);
+    padding: 3rem 0 0 0;
 }
 
-.footer p {
-    font-size: var(--font-size-sm);
-    opacity: 0.7;
+/* Üst Grid: 3 sütun */
+.footer-top {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(152, 181, 217, 0.15);
+}
+
+/* Marka sütunu */
+.footer-brand-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.footer-brand-desc {
+    font-size: 0.82rem;
+    color: rgba(152, 181, 217, 0.75);
+    line-height: 1.7;
+    max-width: 240px;
+    margin-bottom: 20px;
+}
+
+.footer-email-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    color: var(--auxiliary-blue);
+    border: 1px solid rgba(152, 181, 217, 0.2);
+    padding: 7px 14px;
+    border-radius: 50px;
+    transition: all var(--transition-base);
+    text-decoration: none;
+}
+
+.footer-email-btn svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+}
+
+.footer-email-btn:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+/* Sütun başlıkları */
+.footer-col-title {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+/* Link listeleri */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.footer-links li a {
+    font-size: 0.82rem;
+    color: rgba(152, 181, 217, 0.75);
+    text-decoration: none;
+    transition: color var(--transition-base);
+}
+
+.footer-links li a:hover {
+    color: var(--white);
+}
+
+/* Sosyal ikonlar */
+.footer-socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.footer-social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(152, 181, 217, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--auxiliary-blue);
+    transition: all var(--transition-base);
+}
+
+.footer-social-link svg {
+    width: 15px;
+    height: 15px;
+}
+
+.footer-social-link:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+/* Alt bar */
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    gap: 1rem;
+}
+
+.footer-copy {
+    font-size: 0.75rem;
+    color: rgba(152, 181, 217, 0.4);
+}
+
+/* WhatsApp butonu (footer altı) */
+.footer-wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #25D366;
+    text-decoration: none;
+    background: rgba(37, 211, 102, 0.08);
+    border: 1px solid rgba(37, 211, 102, 0.2);
+    padding: 6px 14px;
+    border-radius: 50px;
+    transition: all var(--transition-base);
+}
+
+.footer-wa-btn svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+.footer-wa-btn:hover {
+    background: rgba(37, 211, 102, 0.15);
+}
+
+/* Footer Responsive */
+@media (max-width: 900px) {
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .footer-brand {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-brand {
+        grid-column: span 1;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
 }
 
 /* ===================================
@@ -1106,9 +1319,7 @@ button {
    Responsive Design
    =================================== */
 @media (max-width: 1024px) {
-    .hero-title {
-        font-size: var(--font-size-5xl);
-    }
+ 
 
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1136,10 +1347,7 @@ button {
         transform: translateY(-6px);
     }
 
-    .hero-works-grid {
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(4, 100px);
-    }
+ 
 }
 
 @media (max-width: 768px) {
@@ -1176,31 +1384,10 @@ button {
         visibility: visible;
     }
 
-    .hero-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: var(--spacing-2xl);
-    }
 
-    .hero-subtitle {
-        max-width: 100%;
-    }
 
-    .hero-visual {
-        order: -1;
-    }
 
-    .hero-works-grid {
-        max-width: 400px;
-        margin: 0 auto;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(4, 90px);
-    }
 
-    .hero-features {
-        grid-template-columns: 1fr;
-        text-align: left;
-    }
 
     .portfolio-grid {
         grid-template-columns: 1fr;
@@ -1239,9 +1426,7 @@ button {
         padding: 0 var(--spacing-md);
     }
 
-    .hero-title {
-        font-size: var(--font-size-4xl);
-    }
+
 
     .section-title {
         font-size: var(--font-size-3xl);
