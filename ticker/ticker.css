@@ -1,0 +1,53 @@
+/* ===================================
+   Services Ticker Band
+   =================================== */
+.ticker-band {
+    width: 100%;
+    background-color: var(--navy-blue);
+    overflow: hidden;
+    padding: 0;
+    border-top: 1px solid rgba(152, 181, 217, 0.15);
+    border-bottom: 1px solid rgba(152, 181, 217, 0.15);
+    height: 52px;
+    display: flex;
+    align-items: center;
+}
+
+.ticker-track {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    white-space: nowrap;
+    animation: ticker-scroll 35s linear infinite;
+    will-change: transform;
+}
+
+.ticker-band:hover .ticker-track {
+    animation-play-state: paused;
+}
+
+.ticker-item {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    letter-spacing: 0.6px;
+    color: var(--accent-gold);
+    padding: 0 var(--spacing-lg);
+    text-transform: uppercase;
+}
+
+.ticker-sep {
+    color: var(--auxiliary-blue);
+    font-size: 0.5rem;
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+@keyframes ticker-scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
