@@ -1,66 +1,171 @@
 /* ===================================
-   portfolio.css
-   sections/portfolio.html tarafından
-   kullanılan tüm stiller
+   portfolio/portfolio.css
    =================================== */
 
-/* -------- Section wrapper -------- */
-.work {
-    padding: var(--spacing-4xl) 0;
-    background-color: var(--bg-body);
+:root {
+    --po-black: #111111;
+    --po-white: #ffffff;
+    --po-bg: #f0ede8;
+    --po-gold: #F0C571;
+    --po-gold-2: #E8B835;
+    --po-gold-dark: #D4A020;
+    --po-border: rgba(0, 0, 0, 0.1);
+    --po-text-muted: rgba(0, 0, 0, 0.45);
+    --po-text-secondary: rgba(0, 0, 0, 0.65);
 }
 
-/* -------- Grid -------- */
+/* -------- Section -------- */
+.work {
+    padding: 80px 0;
+    background-color: var(--po-bg);
+    position: relative;
+}
+
+/* Sol gold şerit — sayfa geneli tutarlılık */
+.work::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: var(--po-gold);
+    z-index: 1;
+}
+
+/* -------- Başlık bloğu -------- */
+.work-header-block {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--po-black);
+    gap: 20px;
+}
+
+.work-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.work-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--po-text-muted);
+}
+
+.work-eyebrow-line {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: var(--po-gold-dark);
+    flex-shrink: 0;
+}
+
+.work-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    color: var(--po-black);
+    line-height: 1;
+    margin: 0;
+}
+
+.work-subtitle {
+    font-size: 0.85rem;
+    color: var(--po-text-secondary);
+    line-height: 1.6;
+    max-width: 320px;
+    text-align: right;
+    margin: 0;
+}
+
+/* -------- Portfolio grid -------- */
 .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-sm);
+    gap: 0;
+    border: 2px solid var(--po-black);
+    box-shadow: 6px 6px 0 0 var(--po-gold);
     overflow: hidden;
 }
 
+/* -------- Portfolio item -------- */
 .portfolio-item {
     position: relative;
-    border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
-    background-color: var(--bg-alt);
-    height: 250px;
+    background-color: #ddd;
+    height: 260px;
+    border-right: 1px solid var(--po-black);
+    border-bottom: 1px solid var(--po-black);
+}
+
+/* Son satır ve sütun border temizleme JS ile yapılır,
+   burada genel kural: */
+.portfolio-item:nth-child(3n) {
+    border-right: none;
 }
 
 .portfolio-item.large {
     grid-column: span 2;
     grid-row: span 2;
-    height: 516px;
+    height: 522px;
 }
 
 .portfolio-item.tall {
     grid-row: span 2;
-    height: 516px;
+    height: 522px;
 }
 
 .portfolio-item.wide {
     grid-column: span 2;
-    height: 250px;
+    height: 260px;
 }
 
 /* -------- Görsel -------- */
 .portfolio-image {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
 }
 
 .portfolio-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform var(--transition-base);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
 }
 
 .portfolio-item:hover .portfolio-image img {
-    transform: scale(1.05);
+    transform: scale(1.06);
+}
+
+/* -------- Üst gold şerit (her kartta ince) -------- */
+.portfolio-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--po-gold);
+    z-index: 3;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.portfolio-item:hover::before {
+    transform: scaleX(1);
 }
 
 /* -------- Overlay -------- */
@@ -69,101 +174,197 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: var(--spacing-xl);
-    background: linear-gradient(to top, rgba(4, 30, 67, 0.9), transparent);
-    color: var(--white);
+    padding: 24px 24px 20px;
+    background: linear-gradient(to top,
+        rgba(0, 0, 0, 0.88) 0%,
+        rgba(0, 0, 0, 0.55) 60%,
+        transparent 100%);
+    color: var(--po-white);
     transform: translateY(100%);
-    transition: transform var(--transition-base);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
 }
 
 .portfolio-item:hover .portfolio-overlay {
     transform: translateY(0);
 }
 
+/* Overlay sol gold çizgi */
+.portfolio-overlay::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--po-gold);
+    margin-bottom: 10px;
+}
+
 .portfolio-overlay h3 {
-    font-size: var(--font-size-xl);
-    font-weight: 600;
-    margin-bottom: var(--spacing-xs);
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0 0 5px 0;
+    color: var(--po-white);
+    line-height: 1.2;
 }
 
 .portfolio-overlay p {
-    font-size: var(--font-size-sm);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--po-gold);
+    margin: 0;
     opacity: 0.9;
-    color: var(--auxiliary-blue);
 }
 
-/* -------- Auto-slide progress bar -------- */
+/* Büyüt ikonu */
+.portfolio-zoom-icon {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    background: var(--po-black);
+    border: 1px solid var(--po-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.8) translateY(-4px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 3;
+}
+
+.portfolio-zoom-icon svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--po-gold);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.portfolio-item:hover .portfolio-zoom-icon {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* -------- İlerleme çubuğu -------- */
 .portfolio-progress {
     width: 100%;
     height: 3px;
-    background: rgba(4, 30, 67, 0.08);
-    border-radius: 3px;
-    margin-top: var(--spacing-xl);
+    background: var(--po-border);
+    margin-top: 0;
     overflow: hidden;
+    border-left: 2px solid var(--po-black);
+    border-right: 2px solid var(--po-black);
+    border-bottom: 2px solid var(--po-black);
+    box-shadow: 6px 3px 0 0 var(--po-gold);
 }
 
 .portfolio-progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, var(--navy-blue-light), var(--accent-gold));
-    border-radius: 3px;
-    /* transition süresi JS tarafından dinamik olarak atanır */
+    background: linear-gradient(90deg, var(--po-gold) 0%, var(--po-gold-dark) 100%);
+    transition: width linear;
 }
 
 /* -------- Sayfalama kontrolleri -------- */
 .portfolio-nav {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: var(--spacing-lg);
-    margin-top: var(--spacing-2xl);
+    justify-content: space-between;
+    margin-top: 28px;
+    gap: 12px;
 }
 
+/* Soldan sağa gold kayma — header CTA ile aynı dil */
 .portfolio-nav-btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-lg);
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    color: var(--text-main);
-    background: var(--white);
-    border: 2px solid var(--border-color);
-    border-radius: 50px;
+    gap: 8px;
+    padding: 12px 24px;
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--po-white);
+    background: var(--po-black);
+    border: none;
     cursor: pointer;
-    transition: all var(--transition-base);
-    font-family: var(--font-family);
+    overflow: hidden;
+    transition: color 0.4s ease;
+    flex-shrink: 0;
 }
 
-.portfolio-nav-btn svg {
-    width: 16px;
-    height: 16px;
+.portfolio-nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        var(--po-gold) 0%,
+        var(--po-gold-2) 50%,
+        var(--po-gold-dark) 100%);
+    transform: translateX(-100%);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+}
+
+.portfolio-nav-btn:hover:not(:disabled)::before {
+    transform: translateX(0%);
 }
 
 .portfolio-nav-btn:hover:not(:disabled) {
-    background: var(--primary);
-    color: var(--white);
-    border-color: var(--primary);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    color: var(--po-black);
 }
 
 .portfolio-nav-btn:disabled {
-    opacity: 0.35;
+    opacity: 0.3;
     cursor: not-allowed;
 }
 
+.portfolio-nav-btn svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.portfolio-nav-btn span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Sayfa bilgisi */
 .portfolio-page-info {
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    color: var(--text-light);
-    min-width: 52px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--po-black);
+    min-width: 60px;
     text-align: center;
+    padding: 12px 20px;
+    border: 2px solid var(--po-black);
+    background: var(--po-white);
+    line-height: 1;
 }
 
 /* ===================================
    Responsive
    =================================== */
+
 @media (max-width: 1024px) {
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -172,18 +373,42 @@
     .portfolio-item.large {
         grid-column: span 2;
         grid-row: span 1;
-        height: 250px;
+        height: 260px;
     }
 
     .portfolio-item.tall {
         grid-row: span 1;
-        height: 250px;
+        height: 260px;
+    }
+
+    .portfolio-item:nth-child(3n) {
+        border-right: 1px solid var(--po-black);
+    }
+
+    .portfolio-item:nth-child(2n) {
+        border-right: none;
+    }
+
+    .work-header-block {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .work-subtitle {
+        text-align: left;
+        max-width: 100%;
     }
 }
 
 @media (max-width: 768px) {
+    .work {
+        padding: 60px 0;
+    }
+
     .portfolio-grid {
         grid-template-columns: 1fr;
+        box-shadow: 4px 4px 0 0 var(--po-gold);
     }
 
     .portfolio-item,
@@ -193,5 +418,38 @@
         grid-column: span 1;
         grid-row: span 1;
         height: 220px;
+        border-right: none;
+    }
+
+    .portfolio-item:nth-child(2n) {
+        border-right: none;
+    }
+
+    .portfolio-nav {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .portfolio-nav-btn {
+        padding: 12px 18px;
+        font-size: 0.58rem;
+    }
+
+    .work-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolio-nav-btn span {
+        display: none;
+    }
+
+    .portfolio-nav-btn {
+        padding: 12px 16px;
+    }
+
+    .work-title {
+        font-size: 1.6rem;
     }
 }

@@ -1,286 +1,243 @@
+/**
+ * hero/hero.js
+ * Sol dikey slider → sağ büyük görsel + proje adı senkronizasyonu
+ * Dosya adından proje adı çıkarımı (uzantısız)
+ */
+
 (function () {
   "use strict";
 
-  // ----- Mouse ile hareket eden glow efekti -----
-  function initHeroGlow() {
-    const hero = document.querySelector(".hero");
-    const glow = document.getElementById("heroGlow");
-    if (!hero || !glow) return;
+  window.initHeroSlider = function () {
+    "use strict";
 
-    let ticking = false;
+    const WORKS = [
+      { src: "hero/works/Çankaya Belediye Peyzaj Tasarımı.png" },
+      { src: "hero/works/work (2).png" },
+      { src: "hero/works/work (3).png" },
+      { src: "hero/works/work (4).png" },
+      { src: "hero/works/work (5).png" },
+      { src: "hero/works/work (6).png" },
+      { src: "hero/works/work (7).png" },
+      { src: "hero/works/work (8).png" },
+      { src: "hero/works/work (9).png" },
+      { src: "hero/works/work (10).png" },
+      { src: "hero/works/work (11).png" },
+      { src: "hero/works/work (12).png" },
+      { src: "hero/works/work (13).png" },
+      { src: "hero/works/work (14).png" },
+      { src: "hero/works/work (15).png" },
+      { src: "hero/works/work (16).png" },
+      { src: "hero/works/work (17).png" },
+      { src: "hero/works/work (18).png" },
+      { src: "hero/works/work (19).png" },
+      { src: "hero/works/work (20).png" },
+      { src: "hero/works/work (21).png" },
+      { src: "hero/works/work (22).png" },
+      { src: "hero/works/work (23).png" },
+      { src: "hero/works/work (24).png" },
+      { src: "hero/works/work (25).png" },
+      { src: "hero/works/work (26).png" },
+      { src: "hero/works/work (27).png" },
+      { src: "hero/works/work (28).png" },
+      { src: "hero/works/work (29).png" },
+      { src: "hero/works/work (30).png" },
+    ];
 
-    hero.addEventListener("mousemove", (e) => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const rect = hero.getBoundingClientRect();
-          const x = ((e.clientX - rect.left) / rect.width) * 100;
-          const y = ((e.clientY - rect.top) / rect.height) * 100;
-          glow.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(240, 197, 113, 0.15) 0%, transparent 60%)`;
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
-  }
-  let lightboxInitialized = false;
-  let currentBindEvents = null;
-
-  function initLightbox() {
-    // Eğer daha önce oluşturulduysa tekrar oluşturma
-    if (lightboxInitialized) {
-      return currentBindEvents;
+    function extractProjectName(src) {
+      const parts = src.split("/");
+      const filename = parts[parts.length - 1];
+      const noExt = filename.replace(/\.[^.]+$/, "");
+      const match = noExt.match(/^work\s*\((\d+)\)$/i);
+      if (match) return "Proje " + match[1];
+      return noExt;
     }
 
-    // Lightbox elementlerini oluştur
-    const lightbox = document.createElement("div");
-    lightbox.id = "heroLightbox";
-    lightbox.className = "hero-lightbox";
-    lightbox.innerHTML = `
-      <div class="hero-lightbox-overlay"></div>
-      <div class="hero-lightbox-container">
-        <button class="hero-lightbox-close">&times;</button>
-        <button class="hero-lightbox-prev">‹</button>
-        <button class="hero-lightbox-next">›</button>
-        <div class="hero-lightbox-content">
-          <img class="hero-lightbox-img" src="" alt="">
-        </div>
-      </div>
-    `;
-    document.body.appendChild(lightbox);
-
-    const overlay = lightbox.querySelector(".hero-lightbox-overlay");
-    const closeBtn = lightbox.querySelector(".hero-lightbox-close");
-    const prevBtn = lightbox.querySelector(".hero-lightbox-prev");
-    const nextBtn = lightbox.querySelector(".hero-lightbox-next");
-    const lightboxImg = lightbox.querySelector(".hero-lightbox-img");
-
-    let currentImages = [];
     let currentIndex = 0;
+    const total = WORKS.length;
 
-    // Tüm diamond item'larına tıklama eventi ekle
-    function bindClickEvents() {
-      const items = document.querySelectorAll("#heroDiamondGrid .diamond-item");
-      items.forEach((item, index) => {
-        // Eski event listener'ı kaldır (varsa)
-        item.removeEventListener("click", item._lightboxHandler);
-        // Yeni event listener ekle
-        const handler = () => openLightbox(index);
-        item.addEventListener("click", handler);
-        item._lightboxHandler = handler;
-        item.style.cursor = "pointer";
+    const track = document.getElementById("heroSliderTrack");
+    const prevBtn = document.getElementById("heroSliderPrev");
+    const nextBtn = document.getElementById("heroSliderNext");
+    const countEl = document.getElementById("heroSliderCount");
+    const previewImg = document.getElementById("heroPreviewImg");
+    const previewWrap = document.getElementById("heroPreviewWrap");
+    const previewTitle = document.getElementById("heroPreviewTitle");
+    const previewIndex = document.getElementById("heroPreviewIndex");
+    const previewBar = document.getElementById("heroPreviewBar");
+    const expandBtn = document.getElementById("heroExpandBtn");
+    const lightbox = document.getElementById("heroLightbox");
+    const lbImg = document.getElementById("heroLightboxImg");
+    const lbName = document.getElementById("heroLightboxName");
+    const lbClose = document.getElementById("heroLightboxClose");
+    const lbOverlay = document.getElementById("heroLightboxOverlay");
+    const lbPrev = document.getElementById("heroLightboxPrev");
+    const lbNext = document.getElementById("heroLightboxNext");
+
+    if (!track) return;
+    function buildSlider() {
+      track.innerHTML = "";
+      WORKS.forEach((work, i) => {
+        const slide = document.createElement("div");
+        slide.className = "hero-slide" + (i === 0 ? " active" : "");
+        slide.dataset.index = i;
+
+        const img = document.createElement("img");
+        img.src = work.src;
+        img.alt = extractProjectName(work.src);
+        img.loading = i < 4 ? "eager" : "lazy";
+
+        const num = document.createElement("span");
+        num.className = "hero-slide-num";
+        num.textContent = String(i + 1).padStart(2, "0");
+
+        slide.appendChild(img);
+        slide.appendChild(num);
+        slide.addEventListener("click", () => goTo(i));
+        track.appendChild(slide);
       });
     }
 
-    // Lightbox'ı aç
-    function openLightbox(startIndex) {
-      // Mevcut görselleri güncelle
-      const items = document.querySelectorAll("#heroDiamondGrid .diamond-item");
-      if (items.length === 0) return;
+    function goTo(index) {
+      if (index < 0 || index >= total) return;
+      const slides = track.querySelectorAll(".hero-slide");
+      slides[currentIndex].classList.remove("active");
+      currentIndex = index;
+      slides[currentIndex].classList.add("active");
+      positionTrack();
+      updatePreview(currentIndex);
+      updateNavBtns();
+      updateCount();
+    }
 
-      currentImages = Array.from(items).map(
-        (item) => item.querySelector("img").src,
+    function positionTrack() {
+      const slides = track.querySelectorAll(".hero-slide");
+      if (!slides.length) return;
+      const slideH = slides[0].offsetHeight;
+      const colH = track.parentElement.offsetHeight - 80;
+      const offset = Math.max(
+        0,
+        currentIndex * slideH - (colH / 2 - slideH / 2),
       );
-      currentIndex = startIndex;
+      track.style.transform = `translateY(-${offset}px)`;
+    }
 
-      lightboxImg.classList.remove("active");
-      lightboxImg.src = currentImages[currentIndex];
+    function updatePreview(index) {
+      if (!previewImg) return;
+      const work = WORKS[index];
+      const name = extractProjectName(work.src);
+
+      previewImg.classList.remove("active");
       setTimeout(() => {
-        lightboxImg.classList.add("active");
-      }, 50);
-      lightbox.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
+        previewImg.src = work.src;
+        previewImg.alt = name;
+        previewImg.onload = () => previewImg.classList.add("active");
+        if (previewImg.complete) previewImg.classList.add("active");
+      }, 260);
 
-    // Lightbox'ı kapat
-    function closeLightbox() {
-      lightbox.classList.remove("active");
-      document.body.style.overflow = "";
-    }
-
-    // Önceki görsel
-    function prevImage() {
-      if (currentImages.length === 0) return;
-      currentIndex =
-        (currentIndex - 1 + currentImages.length) % currentImages.length;
-      lightboxImg.classList.remove("active");
-      setTimeout(() => {
-        lightboxImg.src = currentImages[currentIndex];
-        lightboxImg.classList.add("active");
-      }, 50);
-    }
-
-    // Sonraki görsel
-    function nextImage() {
-      if (currentImages.length === 0) return;
-      currentIndex = (currentIndex + 1) % currentImages.length;
-      lightboxImg.classList.remove("active");
-      setTimeout(() => {
-        lightboxImg.src = currentImages[currentIndex];
-        lightboxImg.classList.add("active");
-      }, 50);
-    }
-
-    // Event listener'lar
-    overlay.addEventListener("click", closeLightbox);
-    closeBtn.addEventListener("click", closeLightbox);
-    prevBtn.addEventListener("click", prevImage);
-    nextBtn.addEventListener("click", nextImage);
-
-    // Klavye eventleri
-    document.addEventListener("keydown", (e) => {
-      if (!lightbox.classList.contains("active")) return;
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowLeft") prevImage();
-      if (e.key === "ArrowRight") nextImage();
-    });
-
-    lightboxInitialized = true;
-    currentBindEvents = bindClickEvents;
-
-    // İlk çağrıda eventleri bağla
-    setTimeout(bindClickEvents, 50);
-
-    return bindClickEvents;
-  }
-
-  // ----- Diamond Grid: Görselleri shuffle ve 16 tane göster (4x4 grid) -----
-  function initDiamondGrid() {
-    const grid = document.getElementById("heroDiamondGrid");
-    if (!grid) return;
-
-    const items = Array.from(grid.children);
-
-    // Fisher-Yates shuffle
-    for (let i = items.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [items[i], items[j]] = [items[j], items[i]];
-    }
-
-    // Sadece 16 tane göster (4x4 diamond grid)
-    grid.innerHTML = "";
-    items.slice(0, 16).forEach((item) => grid.appendChild(item));
-
-    // Lightbox'ı başlat (sadece bir kez)
-    const bindEvents = initLightbox();
-
-    // Grid değiştiğinde eventleri yeniden bağla
-    if (bindEvents) {
-      setTimeout(bindEvents, 100);
-    }
-
-    // Her 8 saniyede bir rastgele bir diamond item'ı değiştir
-    startDiamondCycler(items, bindEvents);
-  }
-
-  function startDiamondCycler(allItems, bindEvents) {
-    const grid = document.getElementById("heroDiamondGrid");
-    if (!grid) return;
-
-    let pool = [...allItems]; // Havuzu kopyala
-
-    // Başlangıç havuzunu oluştur (gösterilmeyenler)
-    function updatePool() {
-      const shown = new Set(
-        Array.from(grid.children).map((item) => item.querySelector("img").src),
-      );
-      pool = allItems.filter(
-        (item) => !shown.has(item.querySelector("img").src),
-      );
-    }
-
-    updatePool();
-
-    setInterval(() => {
-      const cells = Array.from(grid.children);
-      if (cells.length === 0 || pool.length === 0) {
-        updatePool();
-        if (pool.length === 0) return;
+      if (previewTitle) {
+        previewTitle.style.opacity = "0";
+        setTimeout(() => {
+          previewTitle.textContent = name;
+          previewTitle.style.opacity = "1";
+          previewTitle.style.transition = "opacity 0.3s ease";
+        }, 200);
       }
+      if (previewBar) {
+        previewBar.style.width = ((index + 1) / total) * 100 + "%";
+      }
+      if (previewIndex) {
+        previewIndex.textContent =
+          String(index + 1).padStart(2, "0") +
+          " / " +
+          String(total).padStart(2, "0");
+      }
+    }
 
-      const targetIdx = Math.floor(Math.random() * cells.length);
-      const target = cells[targetIdx];
-      const nextItem = pool[Math.floor(Math.random() * pool.length)];
+    function updateNavBtns() {
+      if (prevBtn) prevBtn.disabled = currentIndex === 0;
+      if (nextBtn) nextBtn.disabled = currentIndex === total - 1;
+    }
 
-      const oldImg = target.querySelector("img");
-      const oldSrc = oldImg.src;
-      const newSrc = nextItem.querySelector("img").src;
+    function updateCount() {
+      if (countEl) countEl.textContent = currentIndex + 1 + " / " + total;
+    }
 
-      // Crossfade efekti
-      const newImg = document.createElement("img");
-      newImg.src = newSrc;
-      newImg.style.position = "absolute";
-      newImg.style.top = "0";
-      newImg.style.left = "0";
-      newImg.style.width = "100%";
-      newImg.style.height = "100%";
-      newImg.style.objectFit = "cover";
-      newImg.style.opacity = "0";
-      newImg.style.transition = "opacity 0.6s ease";
-      newImg.style.transform = "rotate(-45deg) scale(1.2)";
+    function openLightbox(index) {
+      if (!lightbox || !lbImg) return;
+      const work = WORKS[index];
+      const name = extractProjectName(work.src);
+      lbImg.src = work.src;
+      lbImg.alt = name;
+      if (lbName) lbName.textContent = name;
+      lightbox.classList.add("active");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      setTimeout(() => lbImg.classList.add("active"), 50);
+    }
 
-      target.style.position = "relative";
-      target.appendChild(newImg);
-
+    function closeLightbox() {
+      if (!lightbox) return;
+      lbImg.classList.remove("active");
       setTimeout(() => {
-        newImg.style.opacity = "1";
-      }, 50);
+        lightbox.classList.remove("active");
+        lightbox.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      }, 250);
+    }
 
+    function lbNavigate(dir) {
+      const next = (currentIndex + dir + total) % total;
+      goTo(next);
+      const work = WORKS[next];
+      const name = extractProjectName(work.src);
+      lbImg.classList.remove("active");
       setTimeout(() => {
-        const images = target.querySelectorAll("img");
-        if (images.length > 1) {
-          images[0].remove();
-        }
-        newImg.style.position = "relative";
+        lbImg.src = work.src;
+        lbImg.alt = name;
+        if (lbName) lbName.textContent = name;
+        lbImg.classList.add("active");
+      }, 150);
+    }
 
-        // Havuzu güncelle
-        const nextIndex = pool.findIndex(
-          (w) => w.querySelector("img").src === newSrc,
-        );
-        if (nextIndex !== -1) {
-          const replacement = allItems.find(
-            (w) => w.querySelector("img").src === oldSrc,
-          );
-          if (replacement) pool[nextIndex] = replacement;
-        }
+    function bindEvents() {
+      if (prevBtn)
+        prevBtn.addEventListener("click", () => goTo(currentIndex - 1));
+      if (nextBtn)
+        nextBtn.addEventListener("click", () => goTo(currentIndex + 1));
+      if (expandBtn)
+        expandBtn.addEventListener("click", () => openLightbox(currentIndex));
+      if (lbClose) lbClose.addEventListener("click", closeLightbox);
+      if (lbOverlay) lbOverlay.addEventListener("click", closeLightbox);
+      if (lbPrev) lbPrev.addEventListener("click", () => lbNavigate(-1));
+      if (lbNext) lbNext.addEventListener("click", () => lbNavigate(1));
+      window.addEventListener("resize", positionTrack, { passive: true });
+    }
 
-        // Eventleri yeniden bağla (yeni img eklendiği için)
-        if (bindEvents) {
-          setTimeout(bindEvents, 50);
-        }
-      }, 650);
-    }, 8000);
+    buildSlider();
+    updatePreview(0);
+    updateNavBtns();
+    updateCount();
+    bindEvents();
+    setTimeout(positionTrack, 100);
+  };
+
+  /* -----------------------------------------------
+     İNİT
+  ----------------------------------------------- */
+  function init() {
+    if (!track) return;
+    buildSlider();
+    updatePreview(0);
+    updateNavBtns();
+    updateCount();
+    bindEvents();
+    // İlk konumlandırma (görseller yüklendikten sonra)
+    setTimeout(positionTrack, 100);
   }
 
-  // ----- Scroll animasyonu için observer -----
-  function initScrollAnimations() {
-    const elements = document.querySelectorAll(".hero-text > *");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.animationPlayState = "running";
-          }
-        });
-      },
-      { threshold: 0.1 },
-    );
-
-    elements.forEach((el) => {
-      el.style.animationPlayState = "paused";
-      observer.observe(el);
-    });
-  }
-
-  // ----- Başlat -----
-  document.addEventListener("DOMContentLoaded", () => {
-    initHeroGlow();
-    initDiamondGrid();
-    initScrollAnimations();
-  });
-
-  if (document.readyState !== "loading") {
-    initHeroGlow();
-    initDiamondGrid();
-    initScrollAnimations();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();

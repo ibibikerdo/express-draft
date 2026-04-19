@@ -15,7 +15,7 @@ window.initPricing = function () {
 
       // Eğer sayfanızda id'si "message" veya "subject" olan bir iletişim formu input/textarea varsa,
       // değerini otomatik olarak doldurabiliriz.
-      const messageField = document.getElementById("message");
+      const messageField = document.querySelector('[name="message"]');
 
       if (messageField && selectedPlan) {
         messageField.value = `Merhaba, ${selectedPlan} için detaylı teklif almak istiyorum. Projemin detayları şunlardır:\n\n`;

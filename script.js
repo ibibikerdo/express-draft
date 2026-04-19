@@ -8,6 +8,10 @@ window.initApp = function () {
   initHeroPattern();
   initHeroWorksGrid();
   initPortfolioPagination();
+
+  if (typeof initHeroSlider === "function") {
+    initHeroSlider();
+  }
 };
 
 // ===================================
@@ -42,9 +46,15 @@ function initPortfolioPagination() {
   if (!grid || !prevBtn || !nextBtn) return;
 
   // Tüm works dosyaları havuzu (1–55)
+  // script.js içindeki döngüyü bununla değiştir
   const allImages = [];
   for (let i = 1; i <= 55; i++) {
-    allImages.push(`works/work (${i}).png`);
+    if (i === 1) {
+      // 1. dosyanın adını değiştirdiğimiz için döngüye manuel ekliyoruz
+      allImages.push(`hero/works/Çankaya Belediye Peyzaj Tasarımı.png`);
+    } else {
+      allImages.push(`hero/works/work (${i}).png`);
+    }
   }
 
   const ITEMS_PER_PAGE = 7;

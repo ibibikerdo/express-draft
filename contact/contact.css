@@ -2,100 +2,540 @@
    contact/contact.css
    =================================== */
 
+:root {
+    --contact-gold: #F0C571;
+    --contact-gold-dark: #D4A020;
+    --contact-gold-2: #E8B835;
+    --contact-black: #111111;
+    --contact-white: #ffffff;
+    --contact-bg: #f0ede8;
+    --contact-border: rgba(0, 0, 0, 0.1);
+    --contact-text-muted: rgba(0, 0, 0, 0.45);
+    --contact-text-secondary: rgba(0, 0, 0, 0.65);
+}
+
+/* -------- Section -------- */
 .contact {
-    padding: var(--spacing-4xl) 0;
-    background-color: var(--bg-body);
+    padding: 80px 0;
+    background-color: var(--contact-bg);
+    position: relative;
 }
 
-.contact-content {
+/* Sol gold şerit — tüm section'larla tutarlı */
+.contact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: var(--contact-gold);
+    z-index: 1;
+}
+
+/* -------- Başlık bloğu -------- */
+.contact-header-block {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 52px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--contact-black);
+    gap: 20px;
+}
+
+.contact-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contact-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--contact-text-muted);
+}
+
+.contact-eyebrow-line {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: var(--contact-gold-dark);
+    flex-shrink: 0;
+}
+
+.contact-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    color: var(--contact-black);
+    line-height: 1;
+    margin: 0;
+}
+
+.contact-header-subtitle {
+    font-size: 0.85rem;
+    color: var(--contact-text-secondary);
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 320px;
+    text-align: right;
+    margin: 0;
+}
+
+/* -------- Ana grid -------- */
+.contact-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-4xl);
-    align-items: start;
+    grid-template-columns: 1fr 1.2fr;
+    border: 2px solid var(--contact-black);
+    box-shadow: 6px 6px 0 0 var(--contact-gold);
+    overflow: hidden;
 }
 
+/* -------- Sol panel — gold -------- */
+.contact-left {
+    background: var(--contact-gold);
+    padding: 48px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 2px solid var(--contact-black);
+    position: relative;
+}
+
+/* Üst siyah şerit — pricing-card-stripe ile aynı dil */
+.contact-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--contact-black);
+}
+
+.contact-heading {
+    margin: 0;
+}
+
+.contact-heading-main {
+    display: block;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    color: var(--contact-black);
+    line-height: 0.95;
+}
+
+.contact-heading-sub {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--contact-black);
+    line-height: 1.7;
+    margin-top: 24px;
+    max-width: 300px;
+    opacity: 0.7;
+}
+
+/* İletişim bilgileri */
+.contact-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.contact-info-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* İkon kutusu — pricing-features li svg ile aynı dil */
+.contact-info-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--contact-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.contact-info-icon svg {
+    width: 17px;
+    height: 17px;
+    stroke: var(--contact-gold);
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.contact-info-text {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: var(--contact-black);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.contact-info-text:hover {
+    opacity: 0.6;
+}
+
+/* Sosyal medya linkleri */
+.contact-socials {
+    display: flex;
+    gap: 8px;
+    margin-top: 28px;
+}
+
+.contact-social-link {
+    width: 38px;
+    height: 38px;
+    background: var(--contact-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.contact-social-link:hover {
+    opacity: 0.75;
+    transform: translateY(-2px);
+}
+
+.contact-social-link svg {
+    width: 15px;
+    height: 15px;
+    stroke: var(--contact-gold);
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* -------- Sağ panel — form -------- */
+.contact-right {
+    background: var(--contact-bg);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Üst gold şerit — portfolio-item::before ile aynı dil */
+.contact-right::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--contact-gold);
+    z-index: 1;
+}
+
+.contact-form-inner {
+    padding: 44px 44px 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* -------- Form -------- */
 .contact-form {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
+    flex: 1;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--contact-border);
+}
+
+.form-group:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.form-row .form-group {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 20px;
+}
+
+.form-row .form-group:first-child {
+    padding-right: 20px;
+    border-right: 1px solid var(--contact-border);
+}
+
+.form-row .form-group:last-child {
+    padding-left: 20px;
+}
+
+/* Wrapper: form-row + sonraki form-group'lar arası separator */
+.form-row + .form-group {
+    border-top: 1px solid var(--contact-border);
+    padding-top: 20px;
+    margin-top: 4px;
+}
+
+.form-group label {
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--contact-text-muted);
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: var(--spacing-lg);
+    padding: 12px 0;
     font-family: inherit;
-    font-size: var(--font-size-base);
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    background-color: var(--white);
-    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--contact-black);
+    border: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+    background: transparent;
+    outline: none;
+    transition: border-color 0.25s ease;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(0, 0, 0, 0.25);
+    font-weight: 400;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(4, 30, 67, 0.1);
+    border-bottom-color: var(--contact-black);
 }
 
 .form-group textarea {
-    resize: vertical;
-    min-height: 150px;
+    resize: none;
+    min-height: 110px;
+    line-height: 1.65;
 }
 
-.contact-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-2xl);
-    padding-top: var(--spacing-lg);
-}
-
-.social-links {
-    display: flex;
-    gap: var(--spacing-md);
-}
-
-.social-link {
-    width: 50px;
-    height: 50px;
+/* -------- Submit — portfolio-nav-btn / btn-pricing ile aynı kayma -------- */
+.contact-submit {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
-    border: 2px solid var(--border-color);
-    border-radius: 50%;
-    color: var(--text-light);
-    transition: all var(--transition-base);
+    justify-content: space-between;
+    width: calc(100% + 88px);
+    margin-left: -44px;
+    padding: 22px 44px;
+    font-family: inherit;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--contact-white);
+    background: var(--contact-black);
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    margin-top: auto;
+    transition: color 0.4s ease;
+    flex-shrink: 0;
 }
 
-.social-link:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    transform: translateY(-3px);
+/* Üst border ayracı */
+.contact-submit::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
 }
 
-.social-link svg {
-    width: 22px;
-    height: 22px;
+/* Soldan sağa gold kayma */
+.contact-submit-fill {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        var(--contact-gold) 0%,
+        var(--contact-gold-2) 50%,
+        var(--contact-gold-dark) 100%);
+    transform: translateX(-100%);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+    pointer-events: none;
 }
 
-.contact-email {
-    font-size: var(--font-size-xl);
-    font-weight: 500;
-    color: var(--text-main);
+.contact-submit:hover .contact-submit-fill {
+    transform: translateX(0%);
+}
+
+.contact-submit:hover {
+    color: var(--contact-black);
+}
+
+.contact-submit:active {
+    filter: brightness(0.95);
+}
+
+.contact-submit-text,
+.contact-submit-arrow {
+    position: relative;
+    z-index: 1;
+}
+
+.contact-submit-arrow {
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: transform 0.25s ease;
+}
+
+.contact-submit:hover .contact-submit-arrow {
+    transform: translateX(5px);
+}
+
+/* Gönderildi durumu */
+.contact-submit.sent {
+    background: #1a6b3a;
+    pointer-events: none;
+}
+
+.contact-submit.sent .contact-submit-fill {
+    display: none;
 }
 
 /* ===================================
-   Contact — Responsive
+   Responsive
    =================================== */
-@media (max-width: 768px) {
-    .contact-content {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-2xl);
+
+@media (max-width: 1024px) {
+    .contact-header-block {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
     }
 
-    .contact-info {
-        align-items: center;
+    .contact-header-subtitle {
+        text-align: left;
+        max-width: 100%;
+    }
+
+    .contact-left {
+        padding: 40px 32px;
+    }
+
+    .contact-form-inner {
+        padding: 36px 32px 0;
+    }
+
+    .contact-submit {
+        width: calc(100% + 64px);
+        margin-left: -32px;
+        padding: 20px 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact {
+        padding: 60px 0;
+    }
+
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        box-shadow: 4px 4px 0 0 var(--contact-gold);
+    }
+
+    .contact-left {
+        border-right: none;
+        border-bottom: 2px solid var(--contact-black);
+        padding: 36px 24px;
+    }
+
+    .contact-heading-main {
+        font-size: 2.4rem;
+    }
+
+    .contact-form-inner {
+        padding: 32px 24px 0;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row .form-group:first-child {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--contact-border);
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-row .form-group:last-child {
+        padding-left: 0;
+    }
+
+    .contact-submit {
+        width: calc(100% + 48px);
+        margin-left: -24px;
+        padding: 20px 24px;
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-left {
+        padding: 28px 20px;
+    }
+
+    .contact-form-inner {
+        padding: 28px 20px 0;
+    }
+
+    .contact-heading-main {
+        font-size: 2rem;
+    }
+
+    .contact-title {
+        font-size: 1.6rem;
+    }
+
+    .contact-submit {
+        width: calc(100% + 40px);
+        margin-left: -20px;
+        padding: 18px 20px;
     }
 }

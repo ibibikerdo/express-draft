@@ -1,16 +1,13 @@
-/* ===================================
-   Header Styles — header/header.css
-   =================================== */
-
 :root {
-    --header-height: 88px;
-    --header-bg: rgb(0, 0, 0);
-    --header-border: rgba(240, 197, 113, 0.08);
-    --gold: #F0C571;
-    --gold-dim: rgba(240, 197, 113, 0.5);
-    --gold-faint: rgba(240, 197, 113, 0.06);
-    --blue-muted: rgba(148, 178, 214, 0.55);
-    --blue-faint: rgba(148, 178, 214, 0.07);
+    --header-height: 72px;
+    --header-bg: #ffffff;
+    --header-border: rgba(0, 0, 0, 0.08);
+    --header-text: #111111;
+    --header-nav-color: #555555;
+    --header-nav-hover: #000000;
+    --accent: #F0C571;
+    --accent-dark: #D4A020;
+    --accent-2: #E8B835;
 }
 
 /* -------- Ana kapsayıcı -------- */
@@ -21,353 +18,263 @@
     right: 0;
     height: var(--header-height);
     background-color: var(--header-bg);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
     border-bottom: 1px solid var(--header-border);
     z-index: 1000;
     transition:
-        background-color 0.4s ease,
-        border-color 0.4s ease,
-        box-shadow 0.4s ease,
-        height 0.4s ease;
+        background-color 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        height 0.35s ease;
 }
 
-/* Üst dekoratif çizgi — her zaman görünür, ince */
-.header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(240, 197, 113, 0.1) 15%,
-            rgba(240, 197, 113, 0.55) 50%,
-            rgba(240, 197, 113, 0.1) 85%,
-            transparent 100%);
-    opacity: 0.6;
-    transition: opacity 0.4s ease;
-}
-
-/* Alt ışıma efekti */
-.header::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(240, 197, 113, 0.4), transparent);
-    transition: width 0.6s ease, opacity 0.4s ease;
-    opacity: 0;
-}
-
-/* Scroll sonrası */
 .header.scrolled {
-    background-color: rgba(2, 8, 18, 0.94);
-    border-bottom-color: rgba(240, 197, 113, 0.12);
-    box-shadow:
-        0 1px 0 rgba(240, 197, 113, 0.06),
-        0 12px 48px rgba(0, 0, 0, 0.6),
-        0 2px 8px rgba(0, 0, 0, 0.3);
-    height: 76px;
-}
-
-.header.scrolled::before {
-    opacity: 1;
-}
-
-.header.scrolled::after {
-    width: 60%;
-    opacity: 1;
+    height: 62px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    border-bottom-color: rgba(0, 0, 0, 0.12);
 }
 
 /* -------- İçerik satırı -------- */
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     height: 100%;
-    gap: 20px;
+    padding: 0;
     position: relative;
-    z-index: 1;
 }
 
-/* -------- Logo -------- */
+/* -------- Logo bloğu -------- */
+.logo-block {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 32px;
+    flex-shrink: 0;
+}
+
 .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
     flex-shrink: 0;
     text-decoration: none;
-    position: relative;
 }
 
 .logo-img {
-    height: 36px;
+    height: 32px;
     width: auto;
     display: block;
-    transition: opacity 0.25s ease, filter 0.25s ease;
-    filter: brightness(1);
+    transition: opacity 0.2s ease;
 }
 
 .logo:hover .logo-img {
-    opacity: 0.85;
-    filter: brightness(1.1) drop-shadow(0 0 8px rgba(240, 197, 113, 0.25));
+    opacity: 0.75;
 }
 
-/* Logo yoksa fallback: logo-mark + wordmark */
-.logo-mark {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, rgba(240, 197, 113, 0.14) 0%, rgba(240, 197, 113, 0.04) 100%);
-    border: 1px solid rgba(240, 197, 113, 0.22);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.logo-mark::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(240, 197, 113, 0.06), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.logo:hover .logo-mark {
-    border-color: rgba(240, 197, 113, 0.4);
-    box-shadow: 0 0 16px rgba(240, 197, 113, 0.12);
-}
-
-.logo:hover .logo-mark::before {
-    opacity: 1;
-}
-
-.logo-mark img {
-    width: 22px;
-    height: 22px;
-    object-fit: contain;
-    position: relative;
-    z-index: 1;
-}
-
+/* Fallback wordmark */
 .logo-wordmark {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
 }
 
 .logo-name {
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 2.5px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    color: #ffffff;
+    color: var(--header-text);
     line-height: 1;
-    transition: color 0.25s ease;
+    transition: color 0.2s ease;
 }
 
 .logo:hover .logo-name {
-    color: rgba(255, 255, 255, 0.92);
+    color: #333;
 }
 
 .logo-sub {
-    font-size: 0.55rem;
+    font-size: 0.48rem;
     font-weight: 400;
-    letter-spacing: 3px;
+    letter-spacing: 3.5px;
     text-transform: uppercase;
-    color: rgba(240, 197, 113, 0.45);
+    color: rgba(0, 0, 0, 0.35);
     line-height: 1;
-    transition: color 0.25s ease;
 }
 
-.logo:hover .logo-sub {
-    color: rgba(240, 197, 113, 0.65);
+/* -------- Aksent Kutusu (logo ile nav arası) -------- */
+.header-accent-block {
+    width: 10px;
+    height: 100%;
+    background: var(--accent);
+    flex-shrink: 0;
+    position: relative;
 }
 
-/* -------- Nav -------- */
+/* Yanındaki dar siyah şerit (derinlik efekti) */
+.header-accent-block::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--header-text);
+}
+
+/* -------- Nav — orta alan -------- */
 .nav {
+    flex: 1;
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    height: 100%;
 }
 
 .nav-list {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 0;
     list-style: none;
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
-/* ---- Nav butonları: eşkenar dörtgen hover efekti ---- */
+.nav-list>li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
 .nav-link {
     position: relative;
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-weight: 600;
-    letter-spacing: 1.2px;
+    letter-spacing: 1.8px;
     text-transform: uppercase;
-    color: var(--blue-muted);
-    padding: 10px 14px;
-    border-radius: 0;
+    color: var(--header-nav-color);
+    padding: 0 18px;
+    height: 100%;
     text-decoration: none;
     white-space: nowrap;
     display: flex;
     align-items: center;
-    gap: 5px;
-    transition: color 0.25s ease;
+    transition: color 0.2s ease;
     overflow: visible;
 }
 
-/* Eşkenar dörtgen (rhombus) arka plan */
-.nav-link::before {
-    content: '';
-    position: absolute;
-    inset: 6px 4px;
-    background: var(--blue-faint);
-    transform: skewX(-12deg) scaleX(0.7);
-    opacity: 0;
-    transition:
-        transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
-        opacity 0.25s ease,
-        background 0.25s ease;
-    border-radius: 3px;
-}
-
-/* Alt ince çizgi */
+/* Alt çizgi hover */
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: 4px;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%) scaleX(0);
-    width: 18px;
-    height: 1.5px;
-    background: var(--gold);
-    border-radius: 1px;
-    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
-    opacity: 0;
+    width: calc(100% - 20px);
+    height: 2px;
+    background: var(--header-text);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .nav-link:hover {
-    color: rgba(255, 255, 255, 0.92);
-}
-
-.nav-link:hover::before {
-    transform: skewX(-12deg) scaleX(1);
-    opacity: 1;
-    background: rgba(148, 178, 214, 0.09);
+    color: var(--header-nav-hover);
 }
 
 .nav-link:hover::after {
     transform: translateX(-50%) scaleX(1);
-    opacity: 1;
 }
 
-/* Aktif sayfa */
 .nav-link.active {
-    color: var(--gold);
-}
-
-.nav-link.active::before {
-    transform: skewX(-12deg) scaleX(1);
-    opacity: 1;
-    background: rgba(240, 197, 113, 0.07);
+    color: var(--header-nav-hover);
 }
 
 .nav-link.active::after {
     transform: translateX(-50%) scaleX(1);
-    opacity: 0.9;
+    background: var(--accent-dark);
 }
 
-/* Sayı sayacı (opsiyonel badge) */
 .nav-link .nav-dot {
-    width: 4px;
-    height: 4px;
-    background: var(--gold);
-    border-radius: 50%;
-    opacity: 0;
-    transform: scale(0);
-    transition: all 0.25s ease;
-    flex-shrink: 0;
+    display: none;
 }
 
-.nav-link.active .nav-dot {
-    opacity: 1;
-    transform: scale(1);
-}
-
-/* Ayraç */
 .nav-separator {
     width: 1px;
-    height: 20px;
-    background: linear-gradient(to bottom, transparent, rgba(148, 178, 214, 0.15), transparent);
-    margin: 0 8px;
+    height: 18px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 0 4px;
     list-style: none;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+/* -------- Sağ aksiyonlar -------- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    height: 100%;
     flex-shrink: 0;
 }
 
-/* -------- Header CTA (WhatsApp butonu) -------- */
+/* -------- Header CTA — soldan sağa renk kayması hover -------- */
 .header-cta {
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    font-size: 0.66rem;
+    gap: 8px;
+    font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.8px;
+    letter-spacing: 1.4px;
     text-transform: uppercase;
-    color: #0A1628;
+    color: var(--header-text);
     text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
+    padding: 0 28px;
+    height: 100%;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
 
-    /* Eşkenar dörtgen (rhombus) form */
-    padding: 10px 22px 10px 18px;
-    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-
-    background: linear-gradient(135deg, #F5CB6A 0%, #E8B835 60%, #D4A020 100%);
-    transition:
-        transform 0.22s ease,
-        filter 0.22s ease,
-        box-shadow 0.22s ease,
-        clip-path 0.22s ease;
+    /* Başlangıç: beyaz arka plan */
+    background: #ffffff;
+    transition: color 0.4s ease;
+    flex-shrink: 0;
+    z-index: 0;
 }
 
-/* Parlama overlay */
+/* Hover renk kayması — pseudo element ile soldan sağa */
 .header-cta::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 60%;
+    left: 0;
+    width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transform: skewX(-20deg);
-    transition: left 0.5s ease;
+    background: linear-gradient(90deg,
+            var(--accent) 0%,
+            var(--accent-2) 50%,
+            var(--accent-dark) 100%);
+    transform: translateX(-100%);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
 }
 
 .header-cta:hover::before {
-    left: 160%;
+    transform: translateX(0%);
+}
+
+.header-cta:hover {
+    color: #0A1628;
+}
+
+.header-cta:active {
+    filter: brightness(0.95);
 }
 
 .header-cta svg {
     width: 13px;
     height: 13px;
     flex-shrink: 0;
+    fill: currentColor;
     position: relative;
     z-index: 1;
-    transition: transform 0.22s ease;
+    transition: transform 0.3s ease;
 }
 
 .header-cta span {
@@ -375,18 +282,16 @@
     z-index: 1;
 }
 
-.header-cta:hover {
-    transform: translateY(-2px) skewX(-1deg);
-    filter: brightness(1.08) drop-shadow(0 6px 20px rgba(240, 197, 113, 0.45));
-}
-
 .header-cta:hover svg {
-    transform: scale(1.15) rotate(-5deg);
+    transform: scale(1.1) rotate(-5deg);
 }
 
-.header-cta:active {
-    transform: translateY(0) skewX(0);
-    filter: brightness(0.98);
+/* Sağ kenar siyah şerit */
+.header-right-bar {
+    width: 8px;
+    height: 100%;
+    background: var(--header-text);
+    flex-shrink: 0;
 }
 
 /* -------- Hamburger -------- */
@@ -395,41 +300,32 @@
     flex-direction: column;
     justify-content: center;
     gap: 5px;
-    padding: 10px;
-    background: rgba(148, 178, 214, 0.05);
-    border: 1px solid rgba(148, 178, 214, 0.12);
-
-    /* Eşkenar dörtgen form */
-    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-    border-radius: 0;
+    padding: 10px 14px;
+    background: none;
+    border: none;
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
     cursor: pointer;
-    transition:
-        background 0.22s ease,
-        border-color 0.22s ease;
-    width: 46px;
-    height: 40px;
+    height: 100%;
     align-items: center;
+    transition: background 0.2s ease;
 }
 
 .mobile-menu-btn:hover {
-    background: rgba(148, 178, 214, 0.11);
-    border-color: rgba(148, 178, 214, 0.25);
+    background: rgba(0, 0, 0, 0.04);
 }
 
 .mobile-menu-btn span {
     display: block;
-    width: 18px;
+    width: 20px;
     height: 1.5px;
-    background-color: rgba(148, 178, 214, 0.82);
+    background-color: var(--header-text);
     border-radius: 1px;
     transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-origin: center;
 }
 
-/* X animasyonu */
 .mobile-menu-btn.active span:nth-child(1) {
     transform: rotate(45deg) translate(4.5px, 4.5px);
-    background-color: var(--gold);
 }
 
 .mobile-menu-btn.active span:nth-child(2) {
@@ -439,7 +335,6 @@
 
 .mobile-menu-btn.active span:nth-child(3) {
     transform: rotate(-45deg) translate(4.5px, -4.5px);
-    background-color: var(--gold);
 }
 
 /* ===================================
@@ -448,8 +343,8 @@
 
 @media (max-width: 1024px) {
     .nav-link {
-        padding: 10px 11px;
-        font-size: 0.65rem;
+        padding: 0 13px;
+        font-size: 0.6rem;
     }
 }
 
@@ -459,26 +354,23 @@
     }
 
     .header-cta {
-        padding: 10px 18px;
-        clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-    }
-
-    .header-cta svg {
-        width: 15px;
-        height: 15px;
+        padding: 0 20px;
     }
 }
 
 @media (max-width: 768px) {
     :root {
-        --header-height: 72px;
+        --header-height: 64px;
     }
 
     .mobile-menu-btn {
         display: flex;
     }
 
-    /* Mobil nav listesi */
+    .nav {
+        justify-content: flex-end;
+    }
+
     .nav-list {
         position: fixed;
         top: var(--header-height);
@@ -486,13 +378,13 @@
         right: 0;
         flex-direction: column;
         align-items: stretch;
-        gap: 2px;
-        background-color: rgba(2, 8, 20, 0.97);
-        backdrop-filter: blur(28px);
-        -webkit-backdrop-filter: blur(28px);
-        border-bottom: 1px solid rgba(240, 197, 113, 0.1);
-        padding: 12px 16px 20px;
-        transform: translateY(-12px);
+        height: auto;
+        gap: 0;
+        background-color: #ffffff;
+        border-bottom: 4px solid var(--accent);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        padding: 8px 0 16px;
+        transform: translateY(-8px);
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
@@ -509,87 +401,87 @@
         pointer-events: auto;
     }
 
-    .nav-list li {
+    .nav-list>li {
+        height: auto;
         width: 100%;
     }
 
     .nav-link {
         display: flex;
         align-items: center;
-        padding: 12px 16px;
-        font-size: 0.72rem;
-        letter-spacing: 1.2px;
-        color: rgba(148, 178, 214, 0.65);
-        border-radius: 0;
-        text-align: left;
-        clip-path: none;
-        border-left: 2px solid transparent;
+        padding: 14px 24px;
+        height: auto;
+        font-size: 0.7rem;
+        letter-spacing: 1.8px;
+        color: #555;
+        border-left: 3px solid transparent;
         transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     }
 
-    .nav-link::before,
     .nav-link::after {
         display: none;
     }
 
     .nav-link:hover {
-        color: #ffffff;
-        background: rgba(148, 178, 214, 0.06);
-        border-left-color: rgba(148, 178, 214, 0.3);
+        color: #000;
+        background: rgba(0, 0, 0, 0.03);
+        border-left-color: rgba(0, 0, 0, 0.2);
     }
 
     .nav-link.active {
-        color: var(--gold);
-        border-left-color: var(--gold);
-        background: rgba(240, 197, 113, 0.05);
+        color: #000;
+        border-left-color: var(--accent-dark);
+        background: rgba(240, 197, 113, 0.06);
     }
 
     .nav-separator {
         display: none;
     }
 
-    /* Son li: CTA butonu */
     .nav-list li:last-child {
-        padding-top: 10px;
-        border-top: 1px solid rgba(148, 178, 214, 0.08);
+        padding-top: 8px;
+        border-top: 1px solid rgba(0, 0, 0, 0.07);
         margin-top: 8px;
     }
 
     .header-cta {
         display: flex;
         justify-content: center;
-        font-size: 0.72rem;
-        padding: 13px 24px;
-        clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-        width: 100%;
+        height: 48px;
+        padding: 0 24px;
+        margin: 0 16px;
+        border-left: none;
+        width: calc(100% - 32px);
     }
 
     .header-cta span {
         display: inline;
     }
+
+    .header-accent-block {
+        display: none;
+    }
+
+    .header-right-bar {
+        display: none;
+    }
 }
 
 @media (max-width: 480px) {
     :root {
-        --header-height: 64px;
+        --header-height: 58px;
     }
 
     .logo-img {
-        height: 28px;
-    }
-
-    .logo-mark {
-        width: 34px;
-        height: 34px;
-        border-radius: 8px;
+        height: 26px;
     }
 
     .logo-name {
-        font-size: 0.76rem;
-        letter-spacing: 2px;
+        font-size: 0.9rem;
+        letter-spacing: 2.5px;
     }
 
-    .logo-sub {
-        letter-spacing: 2.5px;
+    .logo-block {
+        padding: 0 20px;
     }
 }
