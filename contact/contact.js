@@ -23,7 +23,7 @@ window.initContact = function () {
       message,
     ].join("\n");
 
-    window.location.href = `mailto:erdoganntvn@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:exprescizim@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     const submitBtn  = form.querySelector(".contact-submit");
     const textEl     = submitBtn.querySelector(".contact-submit-text");

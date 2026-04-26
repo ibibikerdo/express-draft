@@ -301,7 +301,7 @@ function initFormHandling() {
     const data = Object.fromEntries(formData);
     const subject = `Yeni İletişim Formu Mesajı: ${data.name}`;
     const body = `Ad Soyad: ${data.name}\nE-posta: ${data.email}\n\nMesaj:\n${data.message}`;
-    window.location.href = `mailto:erdoganntvn@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:exprescizim@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     const submitBtn = form.querySelector('button[type="submit"]');
     const origText = submitBtn.textContent;
