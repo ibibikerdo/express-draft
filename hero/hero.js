@@ -12,8 +12,8 @@
 
     const WORKS = [
       { src: "hero/works/Çankaya Belediye Peyzaj Tasarımı.png" },
-      { src: "hero/works/work (2).png" },
-      { src: "hero/works/work (3).png" },
+      { src: "hero/works/Yarak kürek.png" },
+      { src: "hero/works/Ahmet Beyim siki.png" },
       { src: "hero/works/work (4).png" },
       { src: "hero/works/work (5).png" },
       { src: "hero/works/work (6).png" },

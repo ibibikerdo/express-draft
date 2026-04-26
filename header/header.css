@@ -232,7 +232,7 @@
     border-left: 1px solid rgba(0, 0, 0, 0.1);
 
     /* Başlangıç: beyaz arka plan */
-    background: #ffffff;
+    background: #25d366;
     transition: color 0.4s ease;
     flex-shrink: 0;
     z-index: 0;
