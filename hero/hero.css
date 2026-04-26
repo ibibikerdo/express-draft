@@ -1,0 +1,920 @@
+/* ===================================
+   hero/hero.css — 3 Kolon Yeni Layout
+   Sol: Küçük görseller (dikey slider)
+   Orta: Metin + geometrik dekor
+   Sağ: Büyük görsel + proje adı
+   =================================== */
+
+:root {
+    --hr-black: #111111;
+    --hr-white: #ffffff;
+    --hr-bg: #f0ede8;
+    --hr-gold: #F0C571;
+    --hr-gold-2: #E8B835;
+    --hr-gold-dark: #D4A020;
+    --hr-border: rgba(0, 0, 0, 0.1);
+    --hr-text-muted: rgba(0, 0, 0, 0.45);
+    --hr-text-secondary: rgba(0, 0, 0, 0.65);
+    --header-height: 72px;
+}
+
+/* -------- Section -------- */
+.hero {
+    min-height: 100vh;
+    background-color: var(--hr-bg);
+    padding-top: var(--header-height);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Sol gold şerit */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: var(--hr-gold);
+    z-index: 2;
+}
+
+/* Arka plan ince grid deseni */
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* -------- Ana 3 kolonlu wrapper -------- */
+.hero-wrapper {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr 1fr 1.5fr;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    border-bottom: 2px solid var(--hr-black);
+}
+
+/* ====================================
+   SOL KOLON — Küçük görsel slider
+   ==================================== */
+.hero-slider-col {
+    border-right: 2px solid var(--hr-black);
+    display: flex;
+    height: calc(100vh - var(--header-height));
+    /* EKLE */
+
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    background: var(--hr-black);
+    min-height: calc(100vh - var(--header-height));
+}
+
+/* Üst gold şerit */
+.hero-slider-col::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--hr-gold);
+    z-index: 3;
+}
+
+/* Görsel listesi — translateY ile kaydırılır */
+.hero-slider-track {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    flex: 1;
+}
+
+.hero-slide {
+    flex-shrink: 0;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease, opacity 0.3s ease;
+    opacity: 0.55;
+}
+
+.hero-slide.active img {
+    opacity: 1;
+    transform: scale(1.04);
+}
+
+.hero-slide:hover img {
+    opacity: 0.85;
+}
+
+/* Aktif slide sol altın çizgi */
+.hero-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--hr-gold);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.35s ease;
+    z-index: 2;
+}
+
+.hero-slide.active::before {
+    transform: scaleY(1);
+}
+
+/* Slide numarası */
+.hero-slide-num {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.4);
+    z-index: 2;
+    font-variant-numeric: tabular-nums;
+}
+
+.hero-slide.active .hero-slide-num {
+    color: var(--hr-gold);
+}
+
+/* Slider navigasyon ok butonları */
+.hero-slider-nav {
+    display: flex;
+    border-top: 2px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.hero-slider-btn {
+    flex: 1;
+    padding: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.4);
+    transition: color 0.2s ease, background 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-slider-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--hr-gold), var(--hr-gold-dark));
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-slider-btn:hover::before {
+    transform: translateY(0);
+}
+
+.hero-slider-btn:hover {
+    color: var(--hr-black);
+}
+
+.hero-slider-btn:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-slider-btn:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+.hero-slider-btn:disabled::before {
+    display: none;
+}
+
+.hero-slider-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    position: relative;
+    z-index: 1;
+}
+
+/* Sayaç */
+.hero-slider-count {
+    position: absolute;
+    bottom: 56px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.25);
+    pointer-events: none;
+}
+
+/* ====================================
+   ORTA KOLON — Metin + dekor
+   ==================================== */
+.hero-text-col {
+    border-right: 2px solid var(--hr-black);
+    display: flex;
+    flex-direction: column;
+    background: var(--hr-bg);
+    position: relative;
+}
+
+/* Üst siyah şerit (pricing-card-stripe referansı) */
+.hero-text-col::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--hr-black);
+}
+
+/* ---- Üst içerik ---- */
+.hero-text-inner {
+    padding: 52px 40px 40px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Eyebrow */
+.hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--hr-text-muted);
+    margin-bottom: 20px;
+}
+
+.hero-eyebrow-line {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: var(--hr-gold-dark);
+    flex-shrink: 0;
+}
+
+/* Başlık */
+.hero-title {
+    font-size: clamp(2rem, 3.2vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    text-transform: uppercase;
+    color: var(--hr-black);
+    line-height: 0.95;
+    margin: 0 0 28px 0;
+}
+
+.hero-title-accent {
+    color: var(--hr-gold-dark);
+    display: block;
+}
+
+/* Açıklama */
+.hero-desc {
+    font-size: 0.83rem;
+    color: var(--hr-text-secondary);
+    line-height: 1.8;
+    margin-bottom: 32px;
+    max-width: 340px;
+}
+
+/* ---- Geometrik dekoratif bloklar ---- */
+.hero-geo-blocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 2px solid var(--hr-black);
+    margin-bottom: 32px;
+    box-shadow: 4px 4px 0 0 var(--hr-gold);
+}
+
+.hero-geo-block {
+    padding: 18px 20px;
+    border-right: 1px solid var(--hr-black);
+    border-bottom: 1px solid var(--hr-black);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-geo-block:nth-child(2n) {
+    border-right: none;
+}
+
+.hero-geo-block:nth-last-child(-n+2) {
+    border-bottom: none;
+}
+
+.hero-geo-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--hr-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+}
+
+.hero-geo-block:hover::before {
+    transform: scaleX(1);
+}
+
+.hero-geo-num {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: var(--hr-black);
+    line-height: 1;
+}
+
+.hero-geo-num span {
+    font-size: 0.9rem;
+    color: var(--hr-gold-dark);
+}
+
+.hero-geo-label {
+    display: block;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--hr-text-muted);
+    margin-top: 5px;
+}
+
+/* ---- CTA butonlar ---- */
+.hero-cta-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Birincil buton — portfolio-nav-btn ile aynı dil */
+.btn-hero-primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--hr-white);
+    background: var(--hr-black);
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.4s ease;
+}
+
+.btn-hero-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--hr-gold), var(--hr-gold-2), var(--hr-gold-dark));
+    transform: translateX(-100%);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+}
+
+.btn-hero-primary:hover::before {
+    transform: translateX(0);
+}
+
+.btn-hero-primary:hover {
+    color: var(--hr-black);
+}
+
+.btn-hero-primary svg,
+.btn-hero-primary span {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-hero-primary svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+/* İkincil buton — ghost */
+.btn-hero-secondary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--hr-black);
+    background: transparent;
+    border: 2px solid var(--hr-black);
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.4s ease;
+}
+
+.btn-hero-secondary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--hr-black);
+    transform: translateX(-100%);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+}
+
+.btn-hero-secondary:hover::before {
+    transform: translateX(0);
+}
+
+.btn-hero-secondary:hover {
+    color: var(--hr-white);
+}
+
+.btn-hero-secondary svg,
+.btn-hero-secondary span {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-hero-secondary svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+
+.btn-hero-secondary:hover svg {
+    transform: translateX(4px);
+}
+
+/* ====================================
+   SAĞ KOLON — Büyük görsel
+   ==================================== */
+.hero-preview-col {
+    display: flex;
+    flex-direction: column;
+    background: var(--hr-black);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Üst gold şerit */
+.hero-preview-col::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--hr-gold);
+    z-index: 3;
+}
+
+/* Proje adı başlık alanı */
+.hero-preview-header {
+    padding: 20px 28px 18px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+}
+
+.hero-preview-label {
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Proje adı — dosya adından gelir */
+.hero-preview-title {
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--hr-gold);
+    margin: 0;
+    max-width: 70%;
+    text-align: right;
+    line-height: 1.2;
+    transition: opacity 0.3s ease;
+}
+
+/* Büyük görsel alanı */
+.hero-preview-img-wrap {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-preview-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-preview-img.leaving {
+    opacity: 0;
+    transform: scale(1.04);
+}
+
+.hero-preview-img.entering {
+    opacity: 0;
+    transform: scale(0.97);
+}
+
+.hero-preview-img.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Alt bilgi çubuğu */
+.hero-preview-footer {
+    padding: 16px 28px;
+    border-top: 2px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    position: relative;
+    z-index: 2;
+}
+
+.hero-preview-index {
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.25);
+}
+
+/* İlerleme barı */
+.hero-preview-progress {
+    flex: 1;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 0 20px;
+    overflow: hidden;
+}
+
+.hero-preview-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--hr-gold), var(--hr-gold-dark));
+    width: 0%;
+    transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Tam ekran ikonu */
+.hero-preview-expand {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.hero-preview-expand:hover {
+    background: var(--hr-gold);
+    border-color: var(--hr-gold);
+}
+
+.hero-preview-expand:hover svg {
+    stroke: var(--hr-black);
+}
+
+.hero-preview-expand svg {
+    width: 13px;
+    height: 13px;
+    stroke: rgba(255, 255, 255, 0.5);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ====================================
+   LİGHTBOX
+   ==================================== */
+.hero-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.hero-lightbox.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.hero-lightbox-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.96);
+}
+
+.hero-lightbox-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Lightbox üst bar */
+.hero-lightbox-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    z-index: 2;
+}
+
+.hero-lightbox-name {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--hr-gold);
+}
+
+.hero-lightbox-close {
+    width: 38px;
+    height: 38px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.hero-lightbox-close:hover {
+    background: var(--hr-gold);
+}
+
+.hero-lightbox-close:hover svg {
+    stroke: var(--hr-black);
+}
+
+.hero-lightbox-close svg {
+    width: 16px;
+    height: 16px;
+    stroke: rgba(255, 255, 255, 0.7);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+.hero-lightbox-img {
+    max-width: 88vw;
+    max-height: 80vh;
+    object-fit: contain;
+    display: block;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hero-lightbox-img.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.hero-lightbox-prev,
+.hero-lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.2s ease;
+}
+
+.hero-lightbox-prev {
+    left: 24px;
+}
+
+.hero-lightbox-next {
+    right: 24px;
+}
+
+.hero-lightbox-prev:hover,
+.hero-lightbox-next:hover {
+    background: var(--hr-gold);
+}
+
+.hero-lightbox-prev:hover svg,
+.hero-lightbox-next:hover svg {
+    stroke: var(--hr-black);
+}
+
+.hero-lightbox-prev svg,
+.hero-lightbox-next svg {
+    width: 18px;
+    height: 18px;
+    stroke: rgba(255, 255, 255, 0.6);
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ====================================
+   RESPONSIVE
+   ==================================== */
+@media (max-width: 1200px) {
+    .hero-wrapper {
+        grid-template-columns: 220px 1fr 1.4fr;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero-wrapper {
+        grid-template-columns: 180px 1fr 1.2fr;
+    }
+
+    .hero-text-inner {
+        padding: 40px 28px 32px;
+    }
+
+    .hero-geo-blocks {
+        margin-bottom: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero::before {
+        display: none;
+    }
+
+    .hero-wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    .hero-slider-col {
+        min-height: unset;
+        border-right: none;
+        border-bottom: 2px solid var(--hr-black);
+    }
+
+    .hero-slider-track {
+        flex-direction: row;
+    }
+
+    .hero-slide {
+        width: 160px;
+        aspect-ratio: unset;
+        height: 110px;
+    }
+
+    .hero-slider-btn svg[data-dir="up"] {
+        transform: rotate(-90deg);
+    }
+
+    .hero-slider-btn svg[data-dir="down"] {
+        transform: rotate(-90deg);
+    }
+
+    .hero-slider-nav {
+        border-top: none;
+        border-left: 2px solid rgba(255, 255, 255, 0.08);
+        flex-direction: column;
+        width: 40px;
+        flex-shrink: 0;
+    }
+
+    .hero-slider-col {
+        flex-direction: row;
+    }
+
+    .hero-text-col {
+        border-right: none;
+        border-bottom: 2px solid var(--hr-black);
+    }
+
+    .hero-preview-col {
+        min-height: 320px;
+    }
+
+    .hero-geo-blocks {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text-inner {
+        padding: 32px 20px 24px;
+    }
+
+    .hero-cta-row {
+        flex-direction: column;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        justify-content: center;
+    }
+
+    .hero-title {
+        font-size: 1.8rem;
+    }
+}

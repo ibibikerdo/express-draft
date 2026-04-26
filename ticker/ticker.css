@@ -1,0 +1,83 @@
+/* ===================================
+   ticker/ticker.css
+   =================================== */
+
+:root {
+    --tk-black: #111111;
+    --tk-white: #ffffff;
+    --tk-gold: #F0C571;
+    --tk-gold-dark: #D4A020;
+}
+
+/* -------- Band -------- */
+.ticker-band {
+    width: 100%;
+    background-color: var(--tk-black);
+    overflow: hidden;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    border-top: 2px solid var(--tk-gold);
+    border-bottom: 2px solid var(--tk-gold);
+    position: relative;
+}
+
+/* Sol ve sağ fade maskesi */
+.ticker-band::before,
+.ticker-band::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 80px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.ticker-band::before {
+    left: 0;
+    background: linear-gradient(to right, var(--tk-black) 0%, transparent 100%);
+}
+
+.ticker-band::after {
+    right: 0;
+    background: linear-gradient(to left, var(--tk-black) 0%, transparent 100%);
+}
+
+/* -------- Track -------- */
+.ticker-track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: ticker-scroll 38s linear infinite;
+    will-change: transform;
+}
+
+.ticker-band:hover .ticker-track {
+    animation-play-state: paused;
+}
+
+/* -------- Item -------- */
+.ticker-item {
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--tk-gold);
+    padding: 0 28px;
+    flex-shrink: 0;
+}
+
+/* -------- Separator -------- */
+.ticker-sep {
+    color: var(--tk-gold-dark);
+    font-size: 0.45rem;
+    opacity: 0.6;
+    flex-shrink: 0;
+}
+
+/* -------- Animasyon -------- */
+@keyframes ticker-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}

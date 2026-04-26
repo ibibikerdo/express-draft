@@ -1,0 +1,487 @@
+:root {
+    --header-height: 72px;
+    --header-bg: #ffffff;
+    --header-border: rgba(0, 0, 0, 0.08);
+    --header-text: #111111;
+    --header-nav-color: #555555;
+    --header-nav-hover: #000000;
+    --accent: #F0C571;
+    --accent-dark: #D4A020;
+    --accent-2: #E8B835;
+}
+
+/* -------- Ana kapsayıcı -------- */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
+    z-index: 1000;
+    transition:
+        background-color 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        height 0.35s ease;
+}
+
+.header.scrolled {
+    height: 62px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    border-bottom-color: rgba(0, 0, 0, 0.12);
+}
+
+/* -------- İçerik satırı -------- */
+.header-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0;
+    position: relative;
+}
+
+/* -------- Logo bloğu -------- */
+.logo-block {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 32px;
+    flex-shrink: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 32px;
+    width: auto;
+    display: block;
+    transition: opacity 0.2s ease;
+}
+
+.logo:hover .logo-img {
+    opacity: 0.75;
+}
+
+/* Fallback wordmark */
+.logo-wordmark {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.logo-name {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--header-text);
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.logo:hover .logo-name {
+    color: #333;
+}
+
+.logo-sub {
+    font-size: 0.48rem;
+    font-weight: 400;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.35);
+    line-height: 1;
+}
+
+/* -------- Aksent Kutusu (logo ile nav arası) -------- */
+.header-accent-block {
+    width: 10px;
+    height: 100%;
+    background: var(--accent);
+    flex-shrink: 0;
+    position: relative;
+}
+
+/* Yanındaki dar siyah şerit (derinlik efekti) */
+.header-accent-block::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--header-text);
+}
+
+/* -------- Nav — orta alan -------- */
+.nav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.nav-list>li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    position: relative;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--header-nav-color);
+    padding: 0 18px;
+    height: 100%;
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+    overflow: visible;
+}
+
+/* Alt çizgi hover */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: calc(100% - 20px);
+    height: 2px;
+    background: var(--header-text);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-link:hover {
+    color: var(--header-nav-hover);
+}
+
+.nav-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+.nav-link.active {
+    color: var(--header-nav-hover);
+}
+
+.nav-link.active::after {
+    transform: translateX(-50%) scaleX(1);
+    background: var(--accent-dark);
+}
+
+.nav-link .nav-dot {
+    display: none;
+}
+
+.nav-separator {
+    width: 1px;
+    height: 18px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 0 4px;
+    list-style: none;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+/* -------- Sağ aksiyonlar -------- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+/* -------- Header CTA — soldan sağa renk kayması hover -------- */
+.header-cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--header-text);
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 28px;
+    height: 100%;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+
+    /* Başlangıç: beyaz arka plan */
+    background: #ffffff;
+    transition: color 0.4s ease;
+    flex-shrink: 0;
+    z-index: 0;
+}
+
+/* Hover renk kayması — pseudo element ile soldan sağa */
+.header-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            var(--accent) 0%,
+            var(--accent-2) 50%,
+            var(--accent-dark) 100%);
+    transform: translateX(-100%);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+}
+
+.header-cta:hover::before {
+    transform: translateX(0%);
+}
+
+.header-cta:hover {
+    color: #0A1628;
+}
+
+.header-cta:active {
+    filter: brightness(0.95);
+}
+
+.header-cta svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    fill: currentColor;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.header-cta span {
+    position: relative;
+    z-index: 1;
+}
+
+.header-cta:hover svg {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+/* Sağ kenar siyah şerit */
+.header-right-bar {
+    width: 8px;
+    height: 100%;
+    background: var(--header-text);
+    flex-shrink: 0;
+}
+
+/* -------- Hamburger -------- */
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 14px;
+    background: none;
+    border: none;
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    height: 100%;
+    align-items: center;
+    transition: background 0.2s ease;
+}
+
+.mobile-menu-btn:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.mobile-menu-btn span {
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background-color: var(--header-text);
+    border-radius: 1px;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: center;
+}
+
+.mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(4.5px, 4.5px);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(4.5px, -4.5px);
+}
+
+/* ===================================
+   Responsive
+   =================================== */
+
+@media (max-width: 1024px) {
+    .nav-link {
+        padding: 0 13px;
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .header-cta span {
+        display: none;
+    }
+
+    .header-cta {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --header-height: 64px;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .nav {
+        justify-content: flex-end;
+    }
+
+    .nav-list {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+        gap: 0;
+        background-color: #ffffff;
+        border-bottom: 4px solid var(--accent);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        padding: 8px 0 16px;
+        transform: translateY(-8px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+            opacity 0.25s ease,
+            transform 0.25s ease,
+            visibility 0.25s ease;
+    }
+
+    .nav-list.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .nav-list>li {
+        height: auto;
+        width: 100%;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 14px 24px;
+        height: auto;
+        font-size: 0.7rem;
+        letter-spacing: 1.8px;
+        color: #555;
+        border-left: 3px solid transparent;
+        transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .nav-link::after {
+        display: none;
+    }
+
+    .nav-link:hover {
+        color: #000;
+        background: rgba(0, 0, 0, 0.03);
+        border-left-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-link.active {
+        color: #000;
+        border-left-color: var(--accent-dark);
+        background: rgba(240, 197, 113, 0.06);
+    }
+
+    .nav-separator {
+        display: none;
+    }
+
+    .nav-list li:last-child {
+        padding-top: 8px;
+        border-top: 1px solid rgba(0, 0, 0, 0.07);
+        margin-top: 8px;
+    }
+
+    .header-cta {
+        display: flex;
+        justify-content: center;
+        height: 48px;
+        padding: 0 24px;
+        margin: 0 16px;
+        border-left: none;
+        width: calc(100% - 32px);
+    }
+
+    .header-cta span {
+        display: inline;
+    }
+
+    .header-accent-block {
+        display: none;
+    }
+
+    .header-right-bar {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --header-height: 58px;
+    }
+
+    .logo-img {
+        height: 26px;
+    }
+
+    .logo-name {
+        font-size: 0.9rem;
+        letter-spacing: 2.5px;
+    }
+
+    .logo-block {
+        padding: 0 20px;
+    }
+}

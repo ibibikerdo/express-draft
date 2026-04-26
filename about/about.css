@@ -1,0 +1,545 @@
+/* ===================================
+   about/about.css
+   =================================== */
+
+:root {
+    --ab-black: #111111;
+    --ab-white: #ffffff;
+    --ab-bg: #f0ede8;
+    --ab-gold: #F0C571;
+    --ab-gold-2: #E8B835;
+    --ab-gold-dark: #D4A020;
+    --ab-border: rgba(0, 0, 0, 0.1);
+    --ab-text-muted: rgba(0, 0, 0, 0.45);
+    --ab-text-secondary: rgba(0, 0, 0, 0.65);
+}
+
+/* -------- Section -------- */
+.about {
+    padding: 80px 0;
+    background-color: var(--ab-bg);
+    position: relative;
+}
+
+/* Sol gold şerit — tüm section'larla tutarlı */
+.about::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: var(--ab-gold);
+    z-index: 1;
+}
+
+/* -------- Başlık bloğu -------- */
+.about-header-block {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 52px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--ab-black);
+    gap: 20px;
+}
+
+.about-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.about-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ab-text-muted);
+}
+
+.about-eyebrow-line {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: var(--ab-gold-dark);
+    flex-shrink: 0;
+}
+
+.about-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    color: var(--ab-black);
+    line-height: 1;
+    margin: 0;
+}
+
+.about-title-accent {
+    color: var(--ab-gold-dark);
+}
+
+.about-subtitle {
+    font-size: 0.85rem;
+    color: var(--ab-text-secondary);
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 320px;
+    text-align: right;
+    margin: 0;
+}
+
+/* -------- İki sütun layout -------- */
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 2px solid var(--ab-black);
+    box-shadow: 6px 6px 0 0 var(--ab-gold);
+    overflow: hidden;
+}
+
+/* ===================================
+   Sol: Görsel kolonu
+   =================================== */
+.about-image-col {
+    position: relative;
+    overflow: hidden;
+    background: #1a1a1a;
+    min-height: 480px;
+    border-right: 2px solid var(--ab-black);
+}
+
+.about-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.88;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease;
+}
+
+.about-image-col:hover .about-img {
+    transform: scale(1.04);
+    opacity: 0.95;
+}
+
+/* Görsel üstüne gold gradient overlay */
+.about-image-col::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top,
+        rgba(0, 0, 0, 0.7) 0%,
+        transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Floating stat kartları */
+.about-stat-cards {
+    position: absolute;
+    bottom: 28px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    gap: 12px;
+    z-index: 2;
+}
+
+.about-stat {
+    flex: 1;
+    background: var(--ab-white);
+    border: 2px solid var(--ab-black);
+    padding: 14px 16px;
+    box-shadow: 3px 3px 0 0 var(--ab-gold);
+}
+
+.about-stat-num {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--ab-black);
+    line-height: 1;
+    letter-spacing: -1px;
+    display: block;
+}
+
+.about-stat-num span {
+    color: var(--ab-gold-dark);
+    font-size: 1rem;
+}
+
+.about-stat-label {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ab-text-muted);
+    display: block;
+    margin-top: 4px;
+    line-height: 1.3;
+}
+
+/* Üst gold şerit (görsel kartında) */
+.about-image-col::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--ab-gold);
+    z-index: 3;
+}
+
+/* ===================================
+   Sağ: Metin kolonu
+   =================================== */
+.about-text-col {
+    background: var(--ab-white);
+    display: flex;
+    flex-direction: column;
+}
+
+/* İç padding wrapper */
+.about-text-inner {
+    padding: 40px 40px 0;
+    flex-grow: 1;
+}
+
+/* Plan/rol etiketi */
+.about-role-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ab-text-muted);
+    border-bottom: 2px solid var(--ab-black);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.about-role-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--ab-gold);
+    flex-shrink: 0;
+    animation: aboutDotPulse 2s ease infinite;
+}
+
+@keyframes aboutDotPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.65); }
+}
+
+/* Başlık */
+.about-heading {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    color: var(--ab-black);
+    line-height: 1.1;
+    margin: 0 0 20px 0;
+}
+
+/* Biyografi paragrafları */
+.about-bio {
+    font-size: 0.85rem;
+    color: var(--ab-text-secondary);
+    line-height: 1.85;
+    margin: 0 0 16px 0;
+}
+
+/* ===================================
+   Uzmanlık listesi — pricing card
+   feature listesiyle aynı dil
+   =================================== */
+.about-expertise {
+    margin: 24px 0 0;
+    padding: 0;
+    border-top: 1px solid var(--ab-border);
+}
+
+.about-expertise-label {
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--ab-text-muted);
+    padding: 16px 0 12px;
+    display: block;
+}
+
+.about-expertise-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+.about-expertise-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ab-text-secondary);
+    border-bottom: 1px solid var(--ab-border);
+    letter-spacing: 0.2px;
+}
+
+.about-expertise-list li:nth-last-child(-n+2) {
+    border-bottom: none;
+}
+
+.about-expertise-list li svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    stroke: var(--ab-gold-dark);
+    stroke-width: 2.5;
+    background: rgba(212, 160, 32, 0.1);
+    padding: 3px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+/* ===================================
+   CTA butonları — portfolio-nav-btn
+   ile aynı kayma efekti
+   =================================== */
+.about-cta-row {
+    padding: 28px 40px;
+    border-top: 1px solid var(--ab-border);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--ab-white);
+}
+
+/* WhatsApp butonu — soldan gold kayma */
+.btn-about-wa {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ab-white);
+    background: var(--ab-black);
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.4s ease;
+    flex-shrink: 0;
+}
+
+.btn-about-wa::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg,
+        var(--ab-gold) 0%,
+        var(--ab-gold-2) 50%,
+        var(--ab-gold-dark) 100%);
+    transform: translateX(-100%);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+}
+
+.btn-about-wa:hover::before { transform: translateX(0%); }
+.btn-about-wa:hover { color: var(--ab-black); }
+
+.btn-about-wa svg,
+.btn-about-wa span {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-about-wa svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+/* İletişim butonu — ghost */
+.btn-about-contact {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ab-black);
+    background: transparent;
+    border: 2px solid var(--ab-black);
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.4s ease;
+    flex-shrink: 0;
+}
+
+.btn-about-contact::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--ab-black);
+    transform: translateX(-100%);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+}
+
+.btn-about-contact:hover::before { transform: translateX(0%); }
+.btn-about-contact:hover { color: var(--ab-white); }
+
+.btn-about-contact svg,
+.btn-about-contact span {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-about-contact svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+
+.btn-about-contact:hover svg {
+    transform: translateX(4px);
+}
+
+/* ===================================
+   Responsive
+   =================================== */
+
+@media (max-width: 1024px) {
+    .about-content {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .about-text-inner {
+        padding: 32px 32px 0;
+    }
+
+    .about-cta-row {
+        padding: 24px 32px;
+    }
+
+    .about-header-block {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .about-subtitle {
+        text-align: left;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .about {
+        padding: 60px 0;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        box-shadow: 4px 4px 0 0 var(--ab-gold);
+    }
+
+    .about-image-col {
+        border-right: none;
+        border-bottom: 2px solid var(--ab-black);
+        min-height: 300px;
+    }
+
+    .about-stat-cards {
+        bottom: 20px;
+        left: 16px;
+        right: 16px;
+    }
+
+    .about-expertise-list {
+        grid-template-columns: 1fr;
+    }
+
+    .about-expertise-list li:nth-last-child(-n+2) {
+        border-bottom: 1px solid var(--ab-border);
+    }
+
+    .about-expertise-list li:last-child {
+        border-bottom: none;
+    }
+
+    .about-text-inner {
+        padding: 28px 24px 0;
+    }
+
+    .about-cta-row {
+        padding: 20px 24px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-about-wa,
+    .btn-about-contact {
+        justify-content: center;
+    }
+
+    .about-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-stat-cards {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .about-stat {
+        padding: 12px 14px;
+    }
+
+    .about-title {
+        font-size: 1.6rem;
+    }
+
+    .about-heading {
+        font-size: 1.3rem;
+    }
+}

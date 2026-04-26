@@ -1,5 +1,5 @@
 /**
- * sections-loader.js
+ * assets/js/sections-loader.js
  * Tüm HTML section dosyalarını fetch ile ilgili placeholder'lara yükler.
  * Her section dosyası sections/ klasöründe ayrı bir .html olarak tutulur.
  */
@@ -37,14 +37,14 @@
      */
     async function loadAllSections() {
         const sections = [
-            { url: 'sections/header.html', selector: '#section-header' },
-            { url: 'sections/hero.html', selector: '#section-hero' },
-            { url: 'sections/ticker.html', selector: '#section-ticker' },
-            { url: 'sections/portfolio.html', selector: '#section-portfolio' },
-            { url: 'sections/about.html', selector: '#section-about' },
-            { url: 'sections/pricing.html', selector: '#section-pricing' },
-            { url: 'sections/contact.html', selector: '#section-contact' },
-            { url: 'sections/footer-widgets.html', selector: '#section-footer-widgets' },
+            { url: 'header/header.html', selector: '#section-header' },
+            { url: 'hero/hero.html', selector: '#section-hero' },
+            { url: 'ticker/ticker.html', selector: '#section-ticker' },
+            { url: 'portfolio/portfolio.html', selector: '#section-portfolio' },
+            { url: 'about/about.html', selector: '#section-about' },
+            { url: 'pricing/pricing.html', selector: '#section-pricing' },
+            { url: 'contact/contact.html', selector: '#section-contact' },
+            { url: 'footer/footer.html', selector: '#section-footer' },
         ];
 
         // Tüm section'ları paralel yükle
